@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Library.Business.Infastructure;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,7 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
+            new ManagersFactory("DefaultConnection", "MySQLVersion");
         }
     }
 }
