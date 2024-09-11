@@ -22,7 +22,7 @@ namespace Library
         {
             InitializeComponent();
             ManagersFactory mf =  new ManagersFactory("DefaultConnection", "MySQLVersion");
-            new BookFakeData(mf, "books_and_authors.json").InstallData();
+            new FakeData(mf, "books_and_authors.json").InstallData();
         }
     }
 }
