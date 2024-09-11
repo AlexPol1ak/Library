@@ -1,0 +1,582 @@
+{
+  "Фантастика": [
+    {
+      "Name": "Пикник на обочине",
+      "NumberPages": 224,
+      "PublicationDate": 1972,
+      "Authors": [
+        {
+          "FirstName": "Аркадий",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        },
+        {
+          "FirstName": "Борис",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        }
+      ]
+    },
+    {
+      "Name": "Ночной дозор",
+      "NumberPages": 480,
+      "PublicationDate": 1998,
+      "Authors": [
+        {
+          "FirstName": "Сергей",
+          "LastName": "Лукьяненко"
+        }
+      ]
+    },
+    {
+      "Name": "Метро 2033",
+      "NumberPages": 457,
+      "PublicationDate": 2005,
+      "Authors": [
+        {
+          "FirstName": "Дмитрий",
+          "LastName": "Глуховский"
+
+        }
+      ]
+    },
+    {
+      "Name": "Обитаемый остров",
+      "NumberPages": 384,
+      "PublicationDate": 1969,
+      "Authors": [
+        {
+          "FirstName": "Аркадий",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        },
+        {
+          "FirstName": "Борис",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        }
+      ]
+    },
+    {
+      "Name": "Война миров",
+      "NumberPages": 320,
+      "PublicationDate": 1898,
+      "Authors": [
+        {
+          "FirstName": "Герберт",
+          "LastName": "Уэллс"
+        }
+      ]
+    },
+    {
+      "Name": "Сумма технологии",
+      "NumberPages": 514,
+      "PublicationDate": 1964,
+      "Authors": [
+        {
+          "FirstName": "Станислав",
+          "LastName": "Лем"
+        }
+      ]
+    },
+    {
+      "Name": "О дивный новый мир",
+      "NumberPages": 352,
+      "PublicationDate": 1932,
+      "Authors": [
+        {
+          "FirstName": "Олдос",
+          "LastName": "Хаксли"
+        }
+      ]
+    },
+    {
+      "Name": "451 градус по Фаренгейту",
+      "NumberPages": 192,
+      "PublicationDate": 1953,
+      "Authors": [
+        {
+          "FirstName": "Рэй",
+          "LastName": "Брэдбери"
+        }
+      ]
+    },
+    {
+      "Name": "Трудно быть богом",
+      "NumberPages": 240,
+      "PublicationDate": 1964,
+      "Authors": [
+        {
+          "FirstName": "Аркадий",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        },
+        {
+          "FirstName": "Борис",
+          "LastName": "Стругацкий",
+          "Patronymic": "Натанович"
+        }
+      ]
+    },
+    {
+      "Name": "Звёздные дневники Ийона Тихого",
+      "NumberPages": 464,
+      "PublicationDate": 1957,
+      "Authors": [
+        {
+          "FirstName": "Станислав",
+          "LastName": "Лем"
+        }
+      ]
+    }
+  ],
+  "Детектив": [
+    {
+      "Name": "Мастер и Маргарита",
+      "NumberPages": 448,
+      "PublicationDate": 1966,
+      "Authors": [
+        {
+          "FirstName": "Михаил",
+          "LastName": "Булгаков"
+        }
+      ]
+    },
+    {
+      "Name": "А зори здесь тихие...",
+      "NumberPages": 192,
+      "PublicationDate": 1969,
+      "Authors": [
+        {
+          "FirstName": "Борис",
+          "LastName": "Васильев"
+        }
+      ]
+    },
+    {
+      "Name": "Преступление и наказание",
+      "NumberPages": 672,
+      "PublicationDate": 1866,
+      "Authors": [
+        {
+          "FirstName": "Фёдор",
+          "LastName": "Достоевский"
+        }
+      ]
+    },
+    {
+      "Name": "Собака Баскервилей",
+      "NumberPages": 256,
+      "PublicationDate": 1902,
+      "Authors": [
+        {
+          "FirstName": "Артур",
+          "LastName": "Конан Дойл"
+        }
+      ]
+    },
+    {
+      "Name": "Шерлок Холмс: Полное собрание",
+      "NumberPages": 1184,
+      "PublicationDate": 1927,
+      "Authors": [
+        {
+          "FirstName": "Артур",
+          "LastName": "Конан Дойл"
+        }
+      ]
+    },
+    {
+      "Name": "Десять негритят",
+      "NumberPages": 256,
+      "PublicationDate": 1939,
+      "Authors": [
+        {
+          "FirstName": "Агата",
+          "LastName": "Кристи"
+        }
+      ]
+    },
+    {
+      "Name": "Мёртвые души",
+      "NumberPages": 352,
+      "PublicationDate": 1842,
+      "Authors": [
+        {
+          "FirstName": "Николай",
+          "LastName": "Гоголь",
+          "Patronymic": ""
+        }
+      ]
+    },
+    {
+      "Name": "Зелёная миля",
+      "NumberPages": 640,
+      "PublicationDate": 1996,
+      "Authors": [
+        {
+          "FirstName": "Стивен",
+          "LastName": "Кинг"
+        }
+      ]
+    },
+    {
+      "Name": "Убийство в Восточном экспрессе",
+      "NumberPages": 256,
+      "PublicationDate": 1934,
+      "Authors": [
+        {
+          "FirstName": "Агата",
+          "LastName": "Кристи"
+        }
+      ]
+    },
+    {
+      "Name": "Лето Господне",
+      "NumberPages": 368,
+      "PublicationDate": 1933,
+      "Authors": [
+        {
+          "FirstName": "Иван",
+          "LastName": "Шмелёв"
+        }
+      ]
+    }
+  ],
+  "Фэнтези": [
+    {
+      "Name": "Властелин колец: Братство Кольца",
+      "NumberPages": 576,
+      "PublicationDate": 1954,
+      "Authors": [
+        {
+          "FirstName": "Дж. Р. Р.",
+          "LastName": "Толкин"
+        }
+      ]
+    },
+    {
+      "Name": "Хроники Нарнии: Лев, Колдунья и Платяной шкаф",
+      "NumberPages": 224,
+      "PublicationDate": 1950,
+      "Authors": [
+        {
+          "FirstName": "Клайв С.",
+          "LastName": "Льюис"
+        }
+      ]
+    },
+    {
+      "Name": "Гарри Поттер и философский камень",
+      "NumberPages": 320,
+      "PublicationDate": 1997,
+      "Authors": [
+        {
+          "FirstName": "Дж. К.",
+          "LastName": "Роулинг"
+        }
+      ]
+    },
+    {
+      "Name": "Ведьмак: Последнее желание",
+      "NumberPages": 288,
+      "PublicationDate": 1993,
+      "Authors": [
+        {
+          "FirstName": "Анджей",
+          "LastName": "Сапковский"
+        }
+      ]
+    },
+    {
+      "Name": "Лабиринты отражений",
+      "NumberPages": 384,
+      "PublicationDate": 1997,
+      "Authors": [
+        {
+          "FirstName": "Сергей",
+          "LastName": "Лукьяненко"
+        }
+      ]
+    },
+    {
+      "Name": "Тёмные начала: Северное сияние",
+      "NumberPages": 448,
+      "PublicationDate": 1995,
+      "Authors": [
+        {
+          "FirstName": "Филип",
+          "LastName": "Пулман"
+        }
+      ]
+    },
+    {
+      "Name": "Эрагон",
+      "NumberPages": 544,
+      "PublicationDate": 2002,
+      "Authors": [
+        {
+          "FirstName": "Кристофер",
+          "LastName": "Паолини"
+        }
+      ]
+    },
+    {
+      "Name": "Чужак",
+      "NumberPages": 320,
+      "PublicationDate": 2013,
+      "Authors": [
+        {
+          "FirstName": "Максим",
+          "LastName": "Шайтанов"
+        }
+      ]
+    },
+    {
+      "Name": "Американские боги",
+      "NumberPages": 624,
+      "PublicationDate": 2001,
+      "Authors": [
+        {
+          "FirstName": "Нил",
+          "LastName": "Гейман"
+        }
+      ]
+    },
+    {
+      "Name": "Дозоры: Антология",
+      "NumberPages": 1344,
+      "PublicationDate": 2009,
+      "Authors": [
+        {
+          "FirstName": "Сергей",
+          "LastName": "Лукьяненко"
+        }
+      ]
+    }
+  ],
+  "Исторический роман": [
+    {
+      "Name": "Анна Каренина",
+      "NumberPages": 864,
+      "PublicationDate": 1877,
+      "Authors": [
+        {
+          "FirstName": "Лев",
+          "LastName": "Толстой"
+        }
+      ]
+    },
+    {
+      "Name": "Война и мир",
+      "NumberPages": 1225,
+      "PublicationDate": 1869,
+      "Authors": [
+        {
+          "FirstName": "Лев",
+          "LastName": "Толстой"
+        }
+      ]
+    },
+    {
+      "Name": "Тихий Дон",
+      "NumberPages": 1300,
+      "PublicationDate": 1940,
+      "Authors": [
+        {
+          "FirstName": "Михаил",
+          "LastName": "Шолохов"
+        }
+      ]
+    },
+    {
+      "Name": "Доктор Живаго",
+      "NumberPages": 704,
+      "PublicationDate": 1957,
+      "Authors": [
+        {
+          "FirstName": "Борис",
+          "LastName": "Пастернак"
+        }
+      ]
+    },
+    {
+      "Name": "Белая гвардия",
+      "NumberPages": 384,
+      "PublicationDate": 1924,
+      "Authors": [
+        {
+          "FirstName": "Михаил",
+          "LastName": "Булгаков"
+        }
+      ]
+    },
+    {
+      "Name": "Капитанская дочка",
+      "NumberPages": 176,
+      "PublicationDate": 1836,
+      "Authors": [
+        {
+          "FirstName": "Александр",
+          "LastName": "Пушкин"
+        }
+      ]
+    },
+    {
+      "Name": "Мать",
+      "NumberPages": 416,
+      "PublicationDate": 1906,
+      "Authors": [
+        {
+          "FirstName": "Максим",
+          "LastName": "Горький"
+        }
+      ]
+    },
+    {
+      "Name": "Чёрный монах",
+      "NumberPages": 288,
+      "PublicationDate": 1894,
+      "Authors": [
+        {
+          "FirstName": "Антон",
+          "LastName": "Чехов"
+        }
+      ]
+    },
+    {
+      "Name": "Князь Серебряный",
+      "NumberPages": 352,
+      "PublicationDate": 1862,
+      "Authors": [
+        {
+          "FirstName": "Алексей",
+          "LastName": "Толстой"
+        }
+      ]
+    },
+    {
+      "Name": "Дон Кихот",
+      "NumberPages": 1023,
+      "PublicationDate": 1615,
+      "Authors": [
+        {
+          "FirstName": "Мигель",
+          "LastName": "де Сервантес"
+        }
+      ]
+    }
+  ],
+  "Романтика": [
+    {
+      "Name": "Евгений Онегин",
+      "NumberPages": 320,
+      "PublicationDate": 1833,
+      "Authors": [
+        {
+          "FirstName": "Александр",
+          "LastName": "Пушкин"
+        }
+      ]
+    },
+    {
+      "Name": "Гордость и предубеждение",
+      "NumberPages": 432,
+      "PublicationDate": 1813,
+      "Authors": [
+        {
+          "FirstName": "Джейн",
+          "LastName": "Остин"
+        }
+      ]
+    },
+    {
+      "Name": "Джен Эйр",
+      "NumberPages": 512,
+      "PublicationDate": 1847,
+      "Authors": [
+        {
+          "FirstName": "Шарлотта",
+          "LastName": "Бронте"
+        }
+      ]
+    },
+    {
+      "Name": "Тихий Дон",
+      "NumberPages": 1300,
+      "PublicationDate": 1940,
+      "Authors": [
+        {
+          "FirstName": "Михаил",
+          "LastName": "Шолохов"
+        }
+      ]
+    },
+    {
+      "Name": "Унесённые ветром",
+      "NumberPages": 1037,
+      "PublicationDate": 1936,
+      "Authors": [
+        {
+          "FirstName": "Маргарет",
+          "LastName": "Митчелл"
+        }
+      ]
+    },
+    {
+      "Name": "Война и мир",
+      "NumberPages": 1225,
+      "PublicationDate": 1869,
+      "Authors": [
+        {
+          "FirstName": "Лев",
+          "LastName": "Толстой"
+        }
+      ]
+    },
+    {
+      "Name": "Гроза",
+      "NumberPages": 192,
+      "PublicationDate": 1859,
+      "Authors": [
+        {
+          "FirstName": "Александр",
+          "LastName": "Островский"
+        }
+      ]
+    },
+    {
+      "Name": "Отцы и дети",
+      "NumberPages": 352,
+      "PublicationDate": 1862,
+      "Authors": [
+        {
+          "FirstName": "Иван",
+          "LastName": "Тургенев"
+        }
+      ]
+    },
+    {
+      "Name": "Преступление и наказание",
+      "NumberPages": 672,
+      "PublicationDate": 1866,
+      "Authors": [
+        {
+          "FirstName": "Фёдор",
+          "LastName": "Достоевский"
+        }
+      ]
+    },
+    {
+      "Name": "Лолита",
+      "NumberPages": 336,
+      "PublicationDate": 1955,
+      "Authors": [
+        {
+          "FirstName": "Владимир",
+          "LastName": "Набоков"
+        }
+      ]
+    }
+  ]
+}

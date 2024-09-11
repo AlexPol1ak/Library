@@ -1,4 +1,5 @@
 ﻿using Library.Business.Infastructure;
+using Library.Business.Infastructure.DbFakeData;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,8 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
-            new ManagersFactory("DefaultConnection", "MySQLVersion");
+            ManagersFactory mf =  new ManagersFactory("DefaultConnection", "MySQLVersion");
+            new BookFakeData(mf, "books_and_authors.json").InstallData();
         }
     }
 }
