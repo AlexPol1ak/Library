@@ -1,5 +1,6 @@
 ﻿using Library.Business.Infastructure;
 using Library.Business.Infastructure.DbFakeData;
+using Library.ViewModels;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +22,11 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
-            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");           
+            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");
             //if(new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag}");
-            
+
+            MainWindowViewModel mainWindowViewModel = new (managersFactory);
+            this.DataContext = mainWindowViewModel;
         }
     }
 }
