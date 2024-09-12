@@ -21,9 +21,8 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
-            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");
-            
-            if(new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag.ToString()}");
+            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");           
+            //if(new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag}");
             
         }
     }
