@@ -21,8 +21,10 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
-            ManagersFactory mf =  new ManagersFactory("DefaultConnection", "MySQLVersion");
-            new FakeData(mf, "books_and_authors.json").InstallData();
+            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");
+            
+            if(new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag.ToString()}");
+            
         }
     }
 }
