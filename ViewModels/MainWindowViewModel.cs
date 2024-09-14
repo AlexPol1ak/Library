@@ -1,6 +1,7 @@
 ﻿using Library.Business.Infastructure;
 using Library.Business.Managers;
 using Library.Domain.Entities.Books;
+using Library.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +29,7 @@ namespace Library.ViewModels
 
         #region Collections
         public ObservableCollection<Book> Books {  get; set; }
+        public ObservableCollection<Request> Requests { get; set; }
         #endregion
 
         #region Selected
@@ -36,6 +38,12 @@ namespace Library.ViewModels
         {
             get => _selectedBook;
             set { Set(ref _selectedBook, value); }
+        }
+        private Request? _selectedRequest = null;
+        public Request? SelectedRequest
+        {
+            get => _selectedRequest;
+            set { Set(ref _selectedRequest, value); } 
         }
         #endregion
 
@@ -63,6 +71,7 @@ namespace Library.ViewModels
         {
 
             Books = new ObservableCollection<Book>(bookManager.GetBooks("Authors", "Genre", "Rack"));
+            Requests = new ObservableCollection<Request>(requestManager.GetRequests("User", "Book"));
         }
 
     }

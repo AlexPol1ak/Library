@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
@@ -13,61 +13,182 @@
         <TabControl Name="Tb_Main">
             
             <!--#region BOOKS-->
-            <TabItem Header="Книги">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Книги" FontSize="20" />
+                </TabItem.Header>
                 <Grid Name="Grid_Books">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
+                    
                     <ListView Grid.Row="0"
                               ItemsSource="{Binding Books}"
-                              SelectedItem="{Binding SelectedBook}"  
-                              
-                              >
+                              SelectedItem="{Binding SelectedBook}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn                                  
+                                <GridViewColumn                                   
                                     Header="Название"
-                                    DisplayMemberBinding="{Binding Name}"/>
+                                    DisplayMemberBinding="{Binding Name}"
+                                    />
                                 <GridViewColumn 
                                     Header="Авторы"
                                     DisplayMemberBinding="{Binding AuthorsShort}"/>
-                                <GridViewColumn 
-                                    Header="Страниц"
-                                    DisplayMemberBinding="{Binding NumberPages}"/>
-                                <GridViewColumn 
-                                    Header="Дата публикации"
-                                    DisplayMemberBinding="{Binding PublicationDate}"/>
                                 <GridViewColumn
                                     Header="Жанр"
                                     DisplayMemberBinding="{Binding Genre.Name}"/>
                                 <GridViewColumn 
                                     Header="Стеллаж"
                                     DisplayMemberBinding="{Binding Rack.Name}"/>
+                                <GridViewColumn                                    
+                                    Header="Страниц"                                    
+                                    DisplayMemberBinding="{Binding NumberPages}"/>
+                                <GridViewColumn                                    
+                                    Header="Дата публикации"
+                                    DisplayMemberBinding="{Binding PublicationDate}"/>
                             </GridView>
                         </ListView.View>
+                        
                     </ListView>
-                    
+
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" ToolTip="Добавить книгу"
+                                Margin="20 10 20 10" Padding="2" 
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Add" Width="30" Height="30"
+                                             Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Grid.Column="1" ToolTip="Удалить книгу" 
+                                Margin="20 10 20 10" Padding="2" 
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Delete" Width="30" Height="30"
+                                                Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
                 </Grid>
                 
             </TabItem>
             <!--#endregion-->  
             
             <!--#region REQUESTS-->
-            <TabItem Header="Заявки" >
+            <TabItem IsSelected="True">
+                <TabItem.Header>
+                    <TextBlock Text="Заявки" FontSize="20" />
+                </TabItem.Header>
+                <Grid Name="Grid_Request">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView ItemsSource="{Binding Requests}"
+                              SelectedItem="{Binding SelectedRequest}" 
+                              HorizontalAlignment="Stretch"
+                              >
+                        <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Книга"
+                                            DisplayMemberBinding="{Binding Book.Name}" 
+                                            />
+                            <GridViewColumn Header="Читатель"
+                                            DisplayMemberBinding="{Binding User.ShortName}"
+                                             />
+                            <GridViewColumn Header="Дата создания"
+                                            DisplayMemberBinding="{Binding DateCreated}"
+                                            />
+                            <GridViewColumn Header="Дата выдачи"
+                                            DisplayMemberBinding="{Binding IssueDate}"
+                                            />
+                            </GridView>
+                    </ListView.View>
+                    </ListView>
+
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" ToolTip="Добавить заявку"
+                                Margin="20 10 20 10" Padding="2" 
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Add" Width="30" Height="30"
+                                            Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+                        
+                        <Button Grid.Column="2" ToolTip="Удалить заявку" 
+                                 Margin="20 10 20 10" Padding="2" 
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Delete" Width="30" Height="30"
+                                            Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Column="3" ToolTip="Реализовать заявку" 
+                                Margin="20 10 20 10" Padding="2" 
+                                 Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Read" Width="30" Height="30"
+                                                Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+                        <ComboBox Grid.Column="0" Margin="20 10 20 10">
+                            
+                        </ComboBox>
+
+                    </Grid>
+
+                </Grid>
+                             
 
             </TabItem>
             <!--#endregion-->
             
             <!--#region READERS-->
-            <TabItem Header="Читатели">
+            <TabItem >
+                <TabItem.Header>
+                    <TextBlock Text="Читатели" FontSize="20" />
+                </TabItem.Header>
+                <Grid Name="Grid_Readers">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+
+                </Grid>
 
             </TabItem>
             <!--#endregion-->
             
             <!--#region DIAGRAMS-->
-            <TabItem Header="Диаграммы">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Диаграммы" FontSize="20"/>
+                </TabItem.Header>
+                <Grid Name="Grid_Diagramms">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
 
+                </Grid>
             </TabItem>
             <!--#endregion-->
         </TabControl>
