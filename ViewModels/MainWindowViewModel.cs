@@ -12,6 +12,13 @@ using System.Windows;
 
 namespace Library.ViewModels
 {
+    public enum RequestStatus
+    {
+        Все,
+        Очередь,
+        Выданные
+    }
+
     public class MainWindowViewModel : ViewModelBase
     {
         #region Managers
@@ -27,9 +34,17 @@ namespace Library.ViewModels
         private TermManager termManager;
         #endregion
 
-        #region Collections
+        #region Collections        
         public ObservableCollection<Book> Books {  get; set; }
         public ObservableCollection<Request> Requests { get; set; }
+
+        public IEnumerable<RequestStatus> RequestStatusList
+        {
+            get
+            {
+                return Enum.GetValues(typeof(RequestStatus)).Cast<RequestStatus>();
+            }
+        }
         #endregion
 
         #region Selected
@@ -39,11 +54,23 @@ namespace Library.ViewModels
             get => _selectedBook;
             set { Set(ref _selectedBook, value); }
         }
+
         private Request? _selectedRequest = null;
         public Request? SelectedRequest
         {
             get => _selectedRequest;
             set { Set(ref _selectedRequest, value); } 
+        }
+
+        private RequestStatus _selectedRequestStatus = RequestStatus.Все;
+        public RequestStatus SelectedRequestStatus
+        {
+            get { return _selectedRequestStatus; }
+            set
+            {
+                _selectedRequestStatus = value;
+                Set(ref _selectedRequestStatus, value);
+            }
         }
         #endregion
 

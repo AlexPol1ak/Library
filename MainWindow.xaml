@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Style="{StaticResource MaterialDesignWindow}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900">
     <Grid>
         <TabControl Name="Tb_Main">
-            
+
             <!--#region BOOKS-->
             <TabItem>
                 <TabItem.Header>
@@ -22,7 +23,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <ListView Grid.Row="0"
                               ItemsSource="{Binding Books}"
                               SelectedItem="{Binding SelectedBook}">
@@ -49,7 +50,7 @@
                                     DisplayMemberBinding="{Binding PublicationDate}"/>
                             </GridView>
                         </ListView.View>
-                        
+
                     </ListView>
 
                     <Grid Grid.Row="1" Margin="5">
@@ -59,28 +60,45 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+
                         <Button Grid.Column="0" ToolTip="Добавить книгу"
-                                Margin="20 10 20 10" Padding="2" 
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                Style="{StaticResource MainWindowBntStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
                                              Foreground="Black" FontWeight="Bold"/>
                             </Button.Content>
                         </Button>
-                        <Button Grid.Column="1" ToolTip="Удалить книгу" 
-                                Margin="20 10 20 10" Padding="2" 
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+
+                        <Button Grid.Column="1" ToolTip="Удалить книгу"
+                                Style="{StaticResource MainWindowBntStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Delete" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
                             </Button.Content>
                         </Button>
+
+                        <Button Grid.Column="2" ToolTip="Добавить автора" 
+                                Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="AccountsAdd" Width="30" Height="30"
+                                              Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Column="5" ToolTip="Удалить автора" 
+                                Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="DeleteForever" Width="30" Height="30"
+                                                Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
                     </Grid>
                 </Grid>
-                
+
             </TabItem>
-            <!--#endregion-->  
-            
+            <!--#endregion-->
+
             <!--#region REQUESTS-->
             <TabItem IsSelected="True">
                 <TabItem.Header>
@@ -97,21 +115,21 @@
                               HorizontalAlignment="Stretch"
                               >
                         <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Книга"
+                            <GridView>
+                                <GridViewColumn Header="Книга"
                                             DisplayMemberBinding="{Binding Book.Name}" 
                                             />
-                            <GridViewColumn Header="Читатель"
+                                <GridViewColumn Header="Читатель"
                                             DisplayMemberBinding="{Binding User.ShortName}"
                                              />
-                            <GridViewColumn Header="Дата создания"
+                                <GridViewColumn Header="Дата создания"
                                             DisplayMemberBinding="{Binding DateCreated}"
                                             />
-                            <GridViewColumn Header="Дата выдачи"
+                                <GridViewColumn Header="Дата выдачи"
                                             DisplayMemberBinding="{Binding IssueDate}"
                                             />
                             </GridView>
-                    </ListView.View>
+                        </ListView.View>
                     </ListView>
 
                     <Grid Grid.Row="1" Margin="5">
@@ -120,20 +138,18 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            
+
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="1" ToolTip="Добавить заявку"
-                                Margin="20 10 20 10" Padding="2" 
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                Style="{StaticResource MainWindowBntStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
                                             Foreground="Black" FontWeight="Bold"/>
                             </Button.Content>
                         </Button>
-                        
+
                         <Button Grid.Column="2" ToolTip="Удалить заявку" 
-                                 Margin="20 10 20 10" Padding="2" 
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                 Style="{StaticResource MainWindowBntStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Delete" Width="30" Height="30"
                                             Foreground="Black" FontWeight="Bold"/>
@@ -141,32 +157,40 @@
                         </Button>
 
                         <Button Grid.Column="3" ToolTip="Реализовать заявку" 
-                                Margin="20 10 20 10" Padding="2" 
-                                 Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                Style="{StaticResource MainWindowBntStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Read" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
                             </Button.Content>
                         </Button>
 
-                        <ComboBox Grid.Column="0" Margin="20 10 20 10">
-                            
-                        </ComboBox>
+                        <ComboBox Grid.Column="0" Margin="20 10 20 10"
+                                  ItemsSource="{Binding RequestStatusList}"
+                                  SelectedItem="{Binding SelectedRequestStatus}"
+                                  />
+
+
 
                     </Grid>
 
                 </Grid>
-                             
+
 
             </TabItem>
             <!--#endregion-->
-            
+
             <!--#region READERS-->
             <TabItem >
                 <TabItem.Header>
                     <TextBlock Text="Читатели" FontSize="20" />
                 </TabItem.Header>
                 <Grid Name="Grid_Readers">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="153*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="223*"/>
+                        <ColumnDefinition Width="61*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
@@ -176,7 +200,7 @@
 
             </TabItem>
             <!--#endregion-->
-            
+
             <!--#region DIAGRAMS-->
             <TabItem>
                 <TabItem.Header>
