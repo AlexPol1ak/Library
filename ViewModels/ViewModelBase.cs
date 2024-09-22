@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Library.ViewModels
 {
+    /// <summary>
+    /// Базовый класс ViewModel
+    /// </summary>
     public class ViewModelBase: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;

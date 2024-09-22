@@ -12,6 +12,9 @@ using System.Windows;
 
 namespace Library.ViewModels
 {
+    /// <summary>
+    ///  Статусы заявок.
+    /// </summary>
     public enum RequestStatus
     {
         Все,
@@ -34,9 +37,11 @@ namespace Library.ViewModels
         private TermManager termManager;
         #endregion
 
-        #region Collections        
+        #region Collections      
+        // Коллекции привязок в главном окне
         public ObservableCollection<Book> Books {  get; set; }
         public ObservableCollection<Request> Requests { get; set; }
+        public ObservableCollection<User> Users { get; set; }
 
         public IEnumerable<RequestStatus> RequestStatusList
         {
@@ -45,9 +50,20 @@ namespace Library.ViewModels
                 return Enum.GetValues(typeof(RequestStatus)).Cast<RequestStatus>();
             }
         }
+
+        private List<String> chartsVariants = new()
+        { "Количество книг, по годам издания", 
+          "Количество книг, выданных за определенный период",
+          "Cуммарное количество страниц по годам издания"
+        };
+        public IEnumerable<String> ChartsVariants
+        {
+            get => chartsVariants;           
+        }
         #endregion
 
         #region Selected
+        // Выбор пользователя 
         private Book? _selectedBook = null;
         public Book? SelectedBook
         {
@@ -72,6 +88,28 @@ namespace Library.ViewModels
                 Set(ref _selectedRequestStatus, value);
             }
         }
+      
+        private User? _selectedUser = null;
+        public User? SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                Set(ref _selectedUser, value);
+            }
+        }
+
+        private int _selectedChartVariantIndex = 0;
+        public int SelectedChartVariantIndex
+        {
+            get { return _selectedChartVariantIndex; }
+            set
+            {
+                _selectedChartVariantIndex = value;
+                Set(ref _selectedChartVariantIndex, value);
+            }
+        }
         #endregion
 
         public MainWindowViewModel(ManagersFactory managersFactory)
@@ -81,6 +119,11 @@ namespace Library.ViewModels
             initCollections();
         }
 
+        #region Start initialization
+        // Инициализация отобржаемых данных при запуске программы.
+        /// <summary>
+        /// Инициализация менеджеров.
+        /// </summary>
         private void initManagers()
         {
             authorManager = mf.AuthorManager;
@@ -94,12 +137,16 @@ namespace Library.ViewModels
             termManager = mf.TermManager;
         }
 
+        /// <summary>
+        /// Начальная инициализация коллекций
+        /// </summary>
         private void initCollections()
         {
 
             Books = new ObservableCollection<Book>(bookManager.GetBooks("Authors", "Genre", "Rack"));
             Requests = new ObservableCollection<Request>(requestManager.GetRequests("User", "Book"));
+            Users = new ObservableCollection<User>(userManager.GetUsers("Requests"));
         }
-
+        #endregion
     }
 }

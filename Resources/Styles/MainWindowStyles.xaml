@@ -5,11 +5,12 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
+     
+    <!--Стили элементов главного окна.-->
+    
     <!--Buttons-->
     <Style x:Key="MainWindowBntStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="Margin" Value="20 10 20 10" />
-
     </Style>
 
 </ResourceDictionary>

@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace Library.Commands
 {
+    /// <summary>
+    /// Конструктор команд
+    /// </summary>
     public class RelayCommand: ICommand
     {
         private Action<object> _execute;

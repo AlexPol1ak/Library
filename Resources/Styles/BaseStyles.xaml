@@ -5,6 +5,7 @@
 
 
 <!--Centerd-->
+    <!--Базовые стили расположения элементов по центру.-->
     <Style x:Key="CenterAlignment" TargetType="FrameworkElement">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -21,6 +22,7 @@
     </Style>
 
     <!--Buttons-->
+    <!--Базовый стиль всех кнопок-->
     <Style x:Key="BaseButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
         <Setter Property="Padding" Value="2" />
     </Style>

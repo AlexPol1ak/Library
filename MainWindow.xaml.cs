@@ -19,14 +19,18 @@ namespace Library
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel mainWindowViewModel;//ViewModel главного окна 
+        ManagersFactory managersFactory;
+
         public MainWindow()
         {
             InitializeComponent();
-            ManagersFactory managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");
+            managersFactory =  new ManagersFactory("DefaultConnection", "MySQLVersion");
             //if(new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag}");
 
-            MainWindowViewModel mainWindowViewModel = new (managersFactory);
+            mainWindowViewModel = new (managersFactory);
             this.DataContext = mainWindowViewModel;
         }
+
     }
 }

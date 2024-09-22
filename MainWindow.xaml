@@ -100,7 +100,7 @@
             <!--#endregion-->
 
             <!--#region REQUESTS-->
-            <TabItem IsSelected="True">
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Заявки" FontSize="20" />
                 </TabItem.Header>
@@ -169,8 +169,6 @@
                                   SelectedItem="{Binding SelectedRequestStatus}"
                                   />
 
-
-
                     </Grid>
 
                 </Grid>
@@ -180,21 +178,72 @@
             <!--#endregion-->
 
             <!--#region READERS-->
-            <TabItem >
+            <TabItem IsSelected="True">
                 <TabItem.Header>
                     <TextBlock Text="Читатели" FontSize="20" />
                 </TabItem.Header>
                 <Grid Name="Grid_Readers">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="153*"/>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="223*"/>
-                        <ColumnDefinition Width="61*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
+
+                    <ListView ItemsSource="{Binding Users}"
+                              SelectedItem="{Binding SelectedUser}" 
+                              HorizontalAlignment="Stretch"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Фамилия"
+                                            DisplayMemberBinding="{Binding LastName}" 
+                                            />
+                                <GridViewColumn Header="Имя"
+                                            DisplayMemberBinding="{Binding FirstName}"
+                                             />
+                                <GridViewColumn Header="Отчество"
+                                             DisplayMemberBinding="{Binding Patronymic}"
+                                              />
+                                <GridViewColumn Header="Email"
+                                             DisplayMemberBinding="{Binding Email}"
+                                              />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Grid.Column="0" ToolTip="Добавить читателя"
+                                 Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Add" Width="30" Height="30"
+                                                Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Column="1" ToolTip="Удалить читателя"
+                                Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Minus" Width="30" Height="30"
+                                                Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Column="4" ToolTip="Вернуть книгу"
+                                Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="Book" Width="30" Height="30"
+                                            Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+
+
+                    </Grid>
 
                 </Grid>
 
@@ -211,6 +260,31 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Margin="20 10 20 10"
+                                ItemsSource="{Binding ChartsVariants}"
+                                SelectedIndex="{Binding SelectedChartVariantIndex ,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                />
+                        
+                        <Button Grid.Column="2" ToolTip="Показать диаграмму" 
+                                Style="{StaticResource MainWindowBntStyle}">
+                            <Button.Content>
+                                <mdc:PackIcon Kind="ShowChart" Width="30" Height="30"
+                                              Foreground="Black" FontWeight="Bold"/>
+                            </Button.Content>
+                        </Button>
+                        
+                    </Grid>
 
                 </Grid>
             </TabItem>
