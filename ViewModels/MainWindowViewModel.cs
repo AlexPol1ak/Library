@@ -1,5 +1,6 @@
 ﻿using Library.Business.Infastructure;
 using Library.Business.Managers;
+using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
 using System;
@@ -9,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Library.ViewModels
 {
@@ -24,6 +27,13 @@ namespace Library.ViewModels
 
     public class MainWindowViewModel : ViewModelBase
     {
+        public MainWindowViewModel( ManagersFactory managersFactory)
+        {
+            mf = managersFactory;
+            initManagers();
+            initCollections();
+        }
+
         #region Managers
         ManagersFactory mf;
         private AuthorManager authorManager;
@@ -111,14 +121,7 @@ namespace Library.ViewModels
             }
         }
         #endregion
-
-        public MainWindowViewModel(ManagersFactory managersFactory)
-        {
-            mf = managersFactory;
-            initManagers();
-            initCollections();
-        }
-
+   
         #region Start initialization
         // Инициализация отобржаемых данных при запуске программы.
         /// <summary>
@@ -148,5 +151,47 @@ namespace Library.ViewModels
             Users = new ObservableCollection<User>(userManager.GetUsers("Requests"));
         }
         #endregion
+
+        #region Commands
+        #region Books Commands
+        private ICommand _deleteBookCmd;
+        public ICommand DeleteBookCmd => _deleteBookCmd ??=
+            new RelayCommand(
+                deleteBookExecuted,
+                (id) => SelectedBook != null
+                );
+
+        private void deleteBookExecuted(object obj)
+        {
+            Book? book = obj as Book;
+            if (book != null)
+            {
+                var result = MessageBox.Show(
+                    $"Удалить книгу\n{book.Name}?",
+                    "Удалить книгу",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No
+                    );
+                if (result == MessageBoxResult.Yes)
+                {
+                    bookManager.DeleteBook(book.BookId);
+                    bookManager.SaveChanges();
+                }            
+            }
+            updateBookData();
+        }
+        #endregion
+        #endregion
+        #region Supporting Methods
+        private void updateBookData()
+        {
+            Book? tempSelectedBook = SelectedBook;
+            Books.Clear();
+            SelectedBook = null;
+            foreach(Book book in bookManager.GetBooks())Books.Add(book);
+            if(tempSelectedBook != null && Books.Contains(tempSelectedBook)) 
+                SelectedBook = tempSelectedBook;
+        }
+        #endregion
     }
+
 }

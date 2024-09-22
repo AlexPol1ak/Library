@@ -14,7 +14,7 @@
         <TabControl Name="Tb_Main">
 
             <!--#region BOOKS-->
-            <TabItem>
+            <TabItem IsSelected="True">
                 <TabItem.Header>
                     <TextBlock Text="Книги" FontSize="20" />
                 </TabItem.Header>
@@ -70,7 +70,9 @@
                         </Button>
 
                         <Button Grid.Column="1" ToolTip="Удалить книгу"
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource MainWindowBntStyle}"
+                                Command="{Binding DeleteBookCmd}"
+                                CommandParameter="{Binding SelectedBook}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Delete" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
@@ -178,7 +180,7 @@
             <!--#endregion-->
 
             <!--#region READERS-->
-            <TabItem IsSelected="True">
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Читатели" FontSize="20" />
                 </TabItem.Header>
