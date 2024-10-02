@@ -62,7 +62,8 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0" ToolTip="Добавить книгу"
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource MainWindowBntStyle}" 
+                                Command="{Binding AddBookCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
                                              Foreground="Black" FontWeight="Bold"/>
@@ -79,21 +80,7 @@
                             </Button.Content>
                         </Button>
 
-                        <Button Grid.Column="2" ToolTip="Добавить автора" 
-                                Style="{StaticResource MainWindowBntStyle}">
-                            <Button.Content>
-                                <mdc:PackIcon Kind="AccountsAdd" Width="30" Height="30"
-                                              Foreground="Black" FontWeight="Bold"/>
-                            </Button.Content>
-                        </Button>
-
-                        <Button Grid.Column="5" ToolTip="Удалить автора" 
-                                Style="{StaticResource MainWindowBntStyle}">
-                            <Button.Content>
-                                <mdc:PackIcon Kind="DeleteForever" Width="30" Height="30"
-                                                Foreground="Black" FontWeight="Bold"/>
-                            </Button.Content>
-                        </Button>
+                        
 
                     </Grid>
                 </Grid>

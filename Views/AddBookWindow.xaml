@@ -1,0 +1,142 @@
+﻿<Window x:Class="Library.Views.AddBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library.Views"
+        mc:Ignorable="d"
+        xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding AddBookWindowTitle, UpdateSourceTrigger=PropertyChanged}"
+        ResizeMode="NoResize"
+        Height="500" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <GroupBox Grid.Row="0" Grid.Column="0" Margin="5"
+                  Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Название" FontSize="16"/>
+            </GroupBox.Header>
+            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Margin="5"
+                  Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Количество страниц" FontSize="15"/>
+            </GroupBox.Header>
+            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"
+                     />
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="0" Margin="5"
+                  Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Дата публикации" FontSize="15"/>
+            </GroupBox.Header>
+            <DatePicker Margin="35 10 35 10" 
+                        TextBlock.TextAlignment="Center" FontSize="16"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Grid.Column="0" Margin="5"
+                  Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Жанр" FontSize="15"/>
+            </GroupBox.Header>
+            <ListBox/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="1" Margin="5" Style="{x:Null}"
+                  Grid.RowSpan="2">
+            <GroupBox.Header>
+                <TextBlock Text="Авторство" FontSize="15"/>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox  Grid.Column="0" Margin="2"
+                            Style="{x:Null}">
+                    <GroupBox.Header>
+                        <TextBlock Text="Авторы" FontSize="14"/>
+                    </GroupBox.Header>
+                    <ListView Margin="2"/>
+                </GroupBox>
+
+                <GroupBox Grid.Column="2" Margin="2"
+                        Style="{x:Null}">
+                    <GroupBox.Header>
+                        <TextBlock Text="Все Авторы" FontSize="14"/>
+                    </GroupBox.Header>
+                   
+                    <ListView Margin="2"/>
+                </GroupBox>
+
+                
+                <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="2"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                        <Button.Content>
+                            <mdc:PackIcon Kind="ArrowLeftBold"                                   
+                                          Foreground="Black"
+                                          Height="32"
+                                          Width="32"
+                                          Margin="2"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          />
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                        <Button.Content>
+                            <mdc:PackIcon Kind="Delete"                                   
+                                          Foreground="Black"
+                                          Height="32"
+                                          Width="32"
+                                          Margin="2"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          />
+                        </Button.Content>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Margin="5"
+                  Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Описание" FontSize="15"/>
+            </GroupBox.Header>
+            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"
+                     HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+             />
+        </GroupBox>
+
+        <Button Grid.Row="4" Style="{StaticResource AddBookWndBtnSaveCancelStyle}">
+            <Button.Content>
+                <TextBlock Text="Сохранить"/>
+            </Button.Content>
+        </Button>
+        <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource AddBookWndBtnSaveCancelStyle}">
+            <Button.Content>
+                <TextBlock Text="Отмена"/>
+            </Button.Content>
+        </Button>
+    </Grid>
+</Window>

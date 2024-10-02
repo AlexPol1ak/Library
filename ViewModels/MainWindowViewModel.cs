@@ -3,9 +3,11 @@ using Library.Business.Managers;
 using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
+using Library.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -154,6 +156,7 @@ namespace Library.ViewModels
 
         #region Commands
         #region Books Commands
+        #region Book Delete Command
         private ICommand _deleteBookCmd;
         public ICommand DeleteBookCmd => _deleteBookCmd ??=
             new RelayCommand(
@@ -179,6 +182,14 @@ namespace Library.ViewModels
             }
             updateBookData();
         }
+        #endregion
+        private ICommand _addBookCmd;
+        public ICommand AddBookCmd => _addBookCmd ??=
+            new RelayCommand(
+                (id) => (new AddBookWindow(authorManager, bookManager)).ShowDialog()
+                );
+        #region Add Command
+        #endregion
         #endregion
         #endregion
         #region Supporting Methods
