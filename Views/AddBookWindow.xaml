@@ -17,117 +17,148 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <GroupBox Grid.Row="0" Grid.Column="0" Margin="5"
+
+        <!--#region NAME-->
+        <GroupBox Grid.Row="0" Grid.Column="0" Margin="5"                
+                  BorderThickness="0"
                   Style="{x:Null}">
             <GroupBox.Header>
                 <TextBlock Text="Название" FontSize="16"/>
             </GroupBox.Header>
-            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"/>
+            <TextBox Text="{Binding Name}"
+                     Style="{StaticResource AddBookWndTextBoxStyle}"/>
         </GroupBox>
-
+        <!--#endregion-->
+        <!--#region NUMBER PAGES-->
         <GroupBox Grid.Row="1" Grid.Column="0" Margin="5"
+                  BorderThickness="0"
                   Style="{x:Null}">
             <GroupBox.Header>
                 <TextBlock Text="Количество страниц" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Text="{Binding NumberPages}"
+                     Style="{StaticResource AddBookWndTextBoxStyle}"
+                     Margin="40 0 40 0"
                      />
         </GroupBox>
-
+        <!--#endregion-->
+        <!--#region DATE PUBLIC.-->
         <GroupBox Grid.Row="2" Grid.Column="0" Margin="5"
+                  BorderThickness="0"
                   Style="{x:Null}">
             <GroupBox.Header>
-                <TextBlock Text="Дата публикации" FontSize="15"/>
+                <TextBlock Text="Год публикации" FontSize="15"/>
             </GroupBox.Header>
-            <DatePicker Margin="35 10 35 10" 
-                        TextBlock.TextAlignment="Center" FontSize="16"/>
+            <TextBox Text="{Binding PublicationYear}"
+                     Style="{StaticResource AddBookWndTextBoxStyle}"
+                     Margin="40 0 40 0"
+                     />
         </GroupBox>
-
+        <!--#endregion-->
+        <!--#region GENRE-->
         <GroupBox Grid.Row="3" Grid.Column="0" Margin="5"
+                  BorderThickness="0"
                   Style="{x:Null}">
             <GroupBox.Header>
                 <TextBlock Text="Жанр" FontSize="15"/>
             </GroupBox.Header>
-            <ListBox/>
+            <ComboBox Margin="5"
+                      IsEditable="True"
+                      StaysOpenOnEdit="True"
+                      ItemsSource="{Binding Genres}" 
+                      SelectedIndex="{Binding SelectedIndex}"
+                      />
         </GroupBox>
-
+        <!--#endregion-->
+        <!--#region AUTHORS-->
         <GroupBox Grid.Row="0" Grid.Column="1" Margin="5" Style="{x:Null}"
+                  BorderThickness="0"
                   Grid.RowSpan="2">
             <GroupBox.Header>
                 <TextBlock Text="Авторство" FontSize="15"/>
             </GroupBox.Header>
+            
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.7*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.15*"/>
                 </Grid.ColumnDefinitions>
-                <GroupBox  Grid.Column="0" Margin="2"
+                
+                <GroupBox  Grid.Row="0" Grid.Column="0" Margin="2"
                             Style="{x:Null}">
                     <GroupBox.Header>
                         <TextBlock Text="Авторы" FontSize="14"/>
                     </GroupBox.Header>
-                    <ListView Margin="2"/>
+                    <ListView Margin="2"
+                              ItemsSource="{Binding SelectedAuthors}"
+                              SelectedIndex="{Binding SelectedIndexSelectedAuthors}"/>
                 </GroupBox>
 
-                <GroupBox Grid.Column="2" Margin="2"
-                        Style="{x:Null}">
+                <Button Grid.Row="0" Grid.Column="1"
+                    Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                    <Button.Content>
+                        <mdc:PackIcon Kind="Delete"                                   
+                                      Foreground="Black"
+                                      Height="30" Width="30"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"/>
+                    </Button.Content>
+                </Button>
+
+                <GroupBox Grid.Row="1" Grid.Column="0" Margin="2"
+                          Style="{x:Null}">
                     <GroupBox.Header>
                         <TextBlock Text="Все Авторы" FontSize="14"/>
                     </GroupBox.Header>
-                   
-                    <ListView Margin="2"/>
+                    <ComboBox Margin="5"
+                              IsEditable="True" StaysOpenOnEdit="True"
+                              ItemsSource="{Binding AvailableAuthors}" 
+                              SelectedIndex="{Binding SelectedIndexAvailableAuthors}"
+                              FontSize="14"/>
                 </GroupBox>
 
-                
-                <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="2"
-                            VerticalAlignment="Center">
-                    <Button Style="{StaticResource AddBookWndBtnAuthorlStyle}">
-                        <Button.Content>
-                            <mdc:PackIcon Kind="ArrowLeftBold"                                   
-                                          Foreground="Black"
-                                          Height="32"
-                                          Width="32"
-                                          Margin="2"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"
-                                          />
-                        </Button.Content>
-                    </Button>
-                    <Button Style="{StaticResource AddBookWndBtnAuthorlStyle}">
-                        <Button.Content>
-                            <mdc:PackIcon Kind="Delete"                                   
-                                          Foreground="Black"
-                                          Height="32"
-                                          Width="32"
-                                          Margin="2"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"
-                                          />
-                        </Button.Content>
-                    </Button>
-                    
-                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="1"
+                         Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                    <Button.Content>
+                        <mdc:PackIcon Kind="ArrowTop"                                  
+                                      Foreground="Black"
+                                      Height="30" Width="30"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"/>
+                    </Button.Content>
+                </Button>
+
+
+
+
             </Grid>
         </GroupBox>
-
-        <GroupBox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Margin="5"
+        <!--#endregion-->
+        <!--#region DECRIPTION-->
+        <GroupBox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Margin="5"                 
+                  BorderThickness="0"
                   Style="{x:Null}">
             <GroupBox.Header>
                 <TextBlock Text="Описание" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Text="dsf" Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Text="{Binding Description}" 
+                     Style="{StaticResource AddBookWndTextBoxStyle}"
                      HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+                     
              />
         </GroupBox>
-
+        <!--#endregion-->
+        <!--#region BUTTONS-->
         <Button Grid.Row="4" Style="{StaticResource AddBookWndBtnSaveCancelStyle}">
             <Button.Content>
                 <TextBlock Text="Сохранить"/>
@@ -138,5 +169,6 @@
                 <TextBlock Text="Отмена"/>
             </Button.Content>
         </Button>
+        <!--#endregion-->
     </Grid>
 </Window>

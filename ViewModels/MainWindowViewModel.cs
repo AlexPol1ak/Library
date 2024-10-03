@@ -186,7 +186,7 @@ namespace Library.ViewModels
         private ICommand _addBookCmd;
         public ICommand AddBookCmd => _addBookCmd ??=
             new RelayCommand(
-                (id) => (new AddBookWindow(authorManager, bookManager)).ShowDialog()
+                (id) => (new AddBookWindow(authorManager, bookManager, genreManager)).ShowDialog()
                 );
         #region Add Command
         #endregion

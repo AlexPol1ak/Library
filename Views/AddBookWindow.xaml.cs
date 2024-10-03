@@ -23,11 +23,11 @@ namespace Library.Views
     {
         private AddBookWindowViewModel addBookViewModel;
 
-        public AddBookWindow(AuthorManager authorManager, BookManager bookManager)
+        public AddBookWindow(AuthorManager authorManager, BookManager bookManager, GenreManager genreManager)
         {
             InitializeComponent();
             this.Title = "Добавить книгу";
-            addBookViewModel = new(authorManager, bookManager);
+            addBookViewModel = new(authorManager, bookManager, genreManager);
             this.DataContext = addBookViewModel;
         }
         
