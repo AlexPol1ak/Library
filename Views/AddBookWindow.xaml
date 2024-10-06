@@ -72,7 +72,7 @@
                       IsEditable="True"
                       StaysOpenOnEdit="True"
                       ItemsSource="{Binding Genres}" 
-                      SelectedIndex="{Binding SelectedIndex}"
+                      SelectedIndex="{Binding SelectedIndexGenre}"
                       />
         </GroupBox>
         <!--#endregion-->
@@ -105,7 +105,8 @@
                 </GroupBox>
 
                 <Button Grid.Row="0" Grid.Column="1"
-                    Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                        Style="{StaticResource AddBookWndBtnAuthorlStyle}"
+                        Command="{Binding RemoveAuthorCmd}">
                     <Button.Content>
                         <mdc:PackIcon Kind="Delete"                                   
                                       Foreground="Black"
@@ -128,7 +129,8 @@
                 </GroupBox>
 
                 <Button Grid.Row="1" Grid.Column="1"
-                         Style="{StaticResource AddBookWndBtnAuthorlStyle}">
+                        Style="{StaticResource AddBookWndBtnAuthorlStyle}"
+                        Command="{Binding AddAuthorCmd}">
                     <Button.Content>
                         <mdc:PackIcon Kind="ArrowTop"                                  
                                       Foreground="Black"
@@ -159,12 +161,15 @@
         </GroupBox>
         <!--#endregion-->
         <!--#region BUTTONS-->
-        <Button Grid.Row="4" Style="{StaticResource AddBookWndBtnSaveCancelStyle}">
+        <Button Grid.Row="4" Style="{StaticResource AddBookWndBtnSaveCancelStyle}"
+                Command="{Binding SaveBookCmd}">
             <Button.Content>
                 <TextBlock Text="Сохранить"/>
             </Button.Content>
         </Button>
-        <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource AddBookWndBtnSaveCancelStyle}">
+        <Button Grid.Row="4" Grid.Column="1"
+                Style="{StaticResource AddBookWndBtnSaveCancelStyle}"
+                Command="{Binding CancelCmd}">
             <Button.Content>
                 <TextBlock Text="Отмена"/>
             </Button.Content>

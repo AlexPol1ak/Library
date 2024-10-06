@@ -183,12 +183,25 @@ namespace Library.ViewModels
             updateBookData();
         }
         #endregion
+        #region Add Command
         private ICommand _addBookCmd;
         public ICommand AddBookCmd => _addBookCmd ??=
-            new RelayCommand(
-                (id) => (new AddBookWindow(authorManager, bookManager, genreManager)).ShowDialog()
-                );
-        #region Add Command
+            new RelayCommand(addBookExecuted);
+
+        private void addBookExecuted(object obj)
+        {
+            AddBookWindow addBookWindow = new(authorManager, bookManager,
+                genreManager, termManager, rackManager);
+            addBookWindow.ShowDialog();
+            Book? newBook = addBookWindow.NewBook;
+            updateBookData();
+            if(newBook != null && Books.Contains(newBook))
+            {
+                Books.Remove(newBook);
+                Books.Insert(0, newBook);
+                SelectedBook = newBook;                
+            }            
+        }
         #endregion
         #endregion
         #endregion
