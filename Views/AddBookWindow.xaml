@@ -51,10 +51,18 @@
             <GroupBox.Header>
                 <TextBlock Text="Количество страниц" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Text="{Binding NumberPages}"
-                     Style="{StaticResource AddBookWndTextBoxStyle}"
-                     Margin="40 0 40 0"
-                     />
+            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
+                     Margin="40 0 40 0" MaxLength="4">
+                <TextBox.Text>
+                    <Binding Path="NumberPages" UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay" ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <vld:IntValidationRule MinValue="1" MaxValue="9999" 
+                                                   IsNullorEmpty="False"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </GroupBox>
         <!--#endregion-->
         <!--#region DATE PUBLIC.-->
@@ -64,10 +72,18 @@
             <GroupBox.Header>
                 <TextBlock Text="Год публикации" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Text="{Binding PublicationYear}"
-                     Style="{StaticResource AddBookWndTextBoxStyle}"
-                     Margin="40 0 40 0"
-                     />
+            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
+                     Margin="40 0 40 0" MaxLength="4">
+                <TextBox.Text>
+                    <Binding Path="PublicationYear" UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay" ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <vld:IntValidationRule MinValue="1900" IsNullorEmpty="False"/>
+                        </Binding.ValidationRules>
+                        
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </GroupBox>
         <!--#endregion-->
         <!--#region GENRE-->
