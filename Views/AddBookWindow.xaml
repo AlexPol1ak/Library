@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library.Views"
+        xmlns:vld="clr-namespace:Library.Infastructure.Validation"
         mc:Ignorable="d"
         xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
@@ -31,8 +32,16 @@
             <GroupBox.Header>
                 <TextBlock Text="Название" FontSize="16"/>
             </GroupBox.Header>
-            <TextBox Text="{Binding Name}"
-                     Style="{StaticResource AddBookWndTextBoxStyle}"/>
+            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}" MaxLength="45">
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" 
+                         Mode="TwoWay"
+                         ValidatesOnDataErrors="True" >
+                    <Binding.ValidationRules>
+                        <vld:TextValidationRule
+                            MinLength="1" MaxLength="45" IsNullorEmpty="False"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
         </GroupBox>
         <!--#endregion-->
         <!--#region NUMBER PAGES-->
@@ -153,11 +162,21 @@
             <GroupBox.Header>
                 <TextBlock Text="Описание" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Text="{Binding Description}" 
-                     Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
                      HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
-                     
-             />
+                     MaxLength="500"
+                     >
+                <TextBox.Text>
+                    <Binding Path="Description" Mode="TwoWay"
+                             UpdateSourceTrigger="PropertyChanged"
+                             ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <vld:TextValidationRule MinLength="0" MaxLength="500" 
+                                                    IsNullorEmpty="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </GroupBox>
         <!--#endregion-->
         <!--#region BUTTONS-->
