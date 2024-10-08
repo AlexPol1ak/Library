@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Library.ViewModels
@@ -130,6 +131,7 @@ namespace Library.ViewModels
             get { return _selectedIndexAvailableAuthors; }
             set { Set(ref _selectedIndexAvailableAuthors, value); }
         }
+
         #endregion
 
         #region Commands       
@@ -140,6 +142,8 @@ namespace Library.ViewModels
 
         private bool canSaveBook(object arg)
         {
+            
+            
             return true;
         }
 

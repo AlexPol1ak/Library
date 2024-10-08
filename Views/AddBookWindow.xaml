@@ -32,10 +32,9 @@
             <GroupBox.Header>
                 <TextBlock Text="Название" FontSize="16"/>
             </GroupBox.Header>
-            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}" MaxLength="45">
+            <TextBox  Style="{StaticResource AddBookWndTextBoxStyle}" MaxLength="45">
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" 
-                         Mode="TwoWay"
-                         ValidatesOnDataErrors="True" >
+                         Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <vld:TextValidationRule
                             MinLength="1" MaxLength="45" IsNullorEmpty="False"/>
@@ -55,7 +54,7 @@
                      Margin="40 0 40 0" MaxLength="4">
                 <TextBox.Text>
                     <Binding Path="NumberPages" UpdateSourceTrigger="PropertyChanged"
-                             Mode="TwoWay" ValidatesOnDataErrors="True">
+                             Mode="TwoWay" ValidatesOnDataErrors="True" >
                         <Binding.ValidationRules>
                             <vld:IntValidationRule MinValue="1" MaxValue="9999" 
                                                    IsNullorEmpty="False"/>
