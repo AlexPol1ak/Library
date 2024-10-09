@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library.Views"
-        xmlns:vld="clr-namespace:Library.Infastructure.Validation"
         mc:Ignorable="d"
         xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
@@ -34,10 +33,10 @@
             </GroupBox.Header>
             <TextBox  Style="{StaticResource AddBookWndTextBoxStyle}" MaxLength="45">
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" 
-                         Mode="TwoWay" ValidatesOnDataErrors="True">
+                         Mode="TwoWay" ValidatesOnDataErrors="True" 
+                         >
                     <Binding.ValidationRules>
-                        <vld:TextValidationRule
-                            MinLength="1" MaxLength="45" IsNullorEmpty="False"/>
+                        <DataErrorValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -56,8 +55,7 @@
                     <Binding Path="NumberPages" UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay" ValidatesOnDataErrors="True" >
                         <Binding.ValidationRules>
-                            <vld:IntValidationRule MinValue="1" MaxValue="9999" 
-                                                   IsNullorEmpty="False"/>
+                            <DataErrorValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -77,7 +75,7 @@
                     <Binding Path="PublicationYear" UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <vld:IntValidationRule MinValue="1900" IsNullorEmpty="False"/>
+                            <DataErrorValidationRule/>
                         </Binding.ValidationRules>
                         
                     </Binding>
@@ -107,7 +105,7 @@
             <GroupBox.Header>
                 <TextBlock Text="Авторство" FontSize="15"/>
             </GroupBox.Header>
-            
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -117,7 +115,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="0.15*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <GroupBox  Grid.Row="0" Grid.Column="0" Margin="2"
                             Style="{x:Null}">
                     <GroupBox.Header>
@@ -164,9 +162,6 @@
                     </Button.Content>
                 </Button>
 
-
-
-
             </Grid>
         </GroupBox>
         <!--#endregion-->
@@ -186,8 +181,7 @@
                              UpdateSourceTrigger="PropertyChanged"
                              ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <vld:TextValidationRule MinLength="0" MaxLength="500" 
-                                                    IsNullorEmpty="True"/>
+                            <DataErrorValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

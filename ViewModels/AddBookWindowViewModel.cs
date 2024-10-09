@@ -4,6 +4,7 @@ using Library.Domain.Entities.Books;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,11 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Library.ViewModels
 {
-    public class AddBookWindowViewModel : ViewModelBase
+    public class AddBookWindowViewModel : ViewModelBase, IDataErrorInfo
     {
         public event EventHandler EndWork;
         public bool? DialogResult { get; private set; } = null;
@@ -142,8 +144,10 @@ namespace Library.ViewModels
 
         private bool canSaveBook(object arg)
         {
-            
-            
+            if (
+                BookNameHasError || NumberPagesHasError || PublicationYearHasError || 
+                DescriptionHasError || SelectedAuthorsHasError
+                ) return false;
             return true;
         }
 
@@ -242,6 +246,89 @@ namespace Library.ViewModels
             foreach(Author a  in TempAuthors) AvailableAuthors.Add(a);
             // Установка индекса выбора на перемещенного автора.
             SelectedIndexAvailableAuthors = AvailableAuthors.IndexOf(author);          
+        }
+
+        #endregion
+
+        #region Validation
+        public bool BookNameHasError { get; private set; } = false;
+        public bool NumberPagesHasError {  get; private set; } = false;
+        public bool PublicationYearHasError {  get; private set; } = false;
+        public bool DescriptionHasError { get; private set; } = false;
+        public bool _selectedAuthorsHasError = false;
+        public bool SelectedAuthorsHasError
+        {
+            get
+            {
+                if (SelectedAuthors.Count < 1) _selectedAuthorsHasError = true;
+                else _selectedAuthorsHasError = false;
+                return _selectedAuthorsHasError;
+            }
+            set { Set(ref _selectedAuthorsHasError, value); }
+        }
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        if (string.IsNullOrEmpty(Name) || string.IsNullOrWhiteSpace(Name))
+                        {
+                            error = "Поле не может быть пустым!";
+                            BookNameHasError = true;                          
+                        }
+                        else
+                        {
+                            if (Name.Length < 1 || Name.Length > 45)
+                            {
+                                BookNameHasError = true;
+                                error = "Поле должно быть не короче 1 и не длиннее 45 символов!";                             
+                            }
+                            else
+                            {
+                                BookNameHasError = false;
+                            }
+                        }                    
+                        break;
+                        case nameof(NumberPages):
+                        {
+                            if(NumberPages <1 ||  NumberPages > 9999)
+                            {
+                                error = "Количество страниц может быть от 1 до 9999";
+                                NumberPagesHasError = true;
+                            }
+                            else NumberPagesHasError = false;
+                            break;
+                        }
+                        case nameof(PublicationYear):
+                        {
+                            int maxYear = DateTime.Now.Year;
+                            if (PublicationYear < 1900 || PublicationYear > maxYear)
+                            {
+                                error = $"Дата публикации должна быть от 1900 до {maxYear} г.";
+                                PublicationYearHasError = true;
+                            }
+                            else PublicationYearHasError = false;
+                            break;
+                        }
+                        case nameof(Description):
+                        {
+                            if(Description !=  null && Description.Length >500)
+                            {
+                                error = $"Описание не должно привышать 500 символов";
+                                DescriptionHasError = true;
+                            }
+                            else DescriptionHasError = false;
+                            break;
+                        }
+                }
+                return error;
+            }
         }
 
         #endregion
