@@ -156,7 +156,7 @@ namespace Library.ViewModels
 
         #region Commands
         #region Books Commands
-        #region Book Delete Command
+        // Команда удалить книгу.
         private ICommand _deleteBookCmd;
         public ICommand DeleteBookCmd => _deleteBookCmd ??=
             new RelayCommand(
@@ -164,6 +164,10 @@ namespace Library.ViewModels
                 (id) => SelectedBook != null
                 );
 
+        /// <summary>
+        /// Обработчик команды Удалить книгу
+        /// </summary>
+        /// <param name="obj"></param>
         private void deleteBookExecuted(object obj)
         {
             Book? book = obj as Book;
@@ -182,12 +186,13 @@ namespace Library.ViewModels
             }
             updateBookData();
         }
-        #endregion
-        #region Add Command
+        // Команда добавить книгу.
         private ICommand _addBookCmd;
         public ICommand AddBookCmd => _addBookCmd ??=
             new RelayCommand(addBookExecuted);
-
+        /// <summary>
+        /// Обработчик команды добавить книгу.
+        /// </summary>
         private void addBookExecuted(object obj)
         {
             AddBookWindow addBookWindow = new(authorManager, bookManager,
@@ -203,9 +208,28 @@ namespace Library.ViewModels
             }            
         }
         #endregion
+        #region Requests Commands
+        private ICommand _addRequestCmd;
+        private ICommand _deleteRequestCmd;
+        private ICommand _realizationRequestCmd;
+        public ICommand AddRequestCmd => _addRequestCmd ??= 
+            new  RelayCommand(addRequestExecuted);
+
+        /// <summary>
+        /// Обработчик для команды Добавить заявку.
+        /// Добавляет заявку на выдачу книги.
+        /// </summary>
+        private void addRequestExecuted(object obj)
+        {
+
+        }
         #endregion
         #endregion
+
         #region Supporting Methods
+        /// <summary>
+        /// Обновляет список книг.
+        /// </summary>
         private void updateBookData()
         {
             Book? tempSelectedBook = SelectedBook;

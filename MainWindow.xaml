@@ -14,7 +14,7 @@
         <TabControl Name="Tb_Main">
 
             <!--#region BOOKS-->
-            <TabItem IsSelected="True">
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Книги" FontSize="20" />
                 </TabItem.Header>
@@ -89,7 +89,7 @@
             <!--#endregion-->
 
             <!--#region REQUESTS-->
-            <TabItem>
+            <TabItem IsSelected="True">
                 <TabItem.Header>
                     <TextBlock Text="Заявки" FontSize="20" />
                 </TabItem.Header>
