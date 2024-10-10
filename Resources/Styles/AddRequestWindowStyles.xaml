@@ -7,5 +7,14 @@
     
     <!--Стили элементов окна создания заявки.-->
     
-    
+    <!--Стиль текста в блоке Информация-->
+    <Style x:Key="AddRequestInfoTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="2 5 2 0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="AddRequestdBtnSaveCancelStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="Margin" Value="40 10 40 10" />
+    </Style>
 </ResourceDictionary>

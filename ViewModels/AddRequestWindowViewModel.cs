@@ -56,15 +56,22 @@ namespace Library.ViewModels
             this.userManager = userManager;
             this.bookManager = bookManager;
             this.bookHistoryManager = bookHistoryManager;
+            initData();           
         }
 
         private void initData()
         {
-            foreach(User user in userManager.GetUsers("Requests")) Users.Add(user);
-            foreach(Book book in bookManager.GetBooks("Genre", "Rack", "Term", "BookHistory"))
-                Books.Add(book);
+            List<User> tempUsers = userManager.GetUsers("Requests").OrderBy(u=>u.FirstName).ToList();    
+            foreach (User user in tempUsers) Users.Add(user);
+
+            List<Book> tempBooks = bookManager.GetBooks("Genre", "Rack", "Term", "BookHistory").
+                OrderBy(b => b.Name).ToList();
+            foreach (Book book in tempBooks) Books.Add(book);
+
             if (Users.Count > 0) SelectedUserIndex = 0;
             if (Books.Count > 0) SelectedBookIndex = 0;
+
+            InfoText = "Информация о заявке";
         }
 
         
