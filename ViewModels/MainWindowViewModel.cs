@@ -221,7 +221,10 @@ namespace Library.ViewModels
         /// </summary>
         private void addRequestExecuted(object obj)
         {
-
+            AddRequestWindow addRequestWindow = new(
+                requestManager, userManager, bookManager, bookHistoryManager
+                );
+            addRequestWindow.ShowDialog();
         }
         #endregion
         #endregion

@@ -130,7 +130,8 @@
 
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="1" ToolTip="Добавить заявку"
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource MainWindowBntStyle}"
+                                Command="{Binding AddRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
                                             Foreground="Black" FontWeight="Bold"/>
