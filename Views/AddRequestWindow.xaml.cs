@@ -23,6 +23,7 @@ namespace Library.Views
     public partial class AddRequestWindow : Window
     {
         AddRequestWindowViewModel addRequestWindowVm;
+        public Request? NewRequest { get; private set; } = null;
 
         public AddRequestWindow(RequestManager requestManager, UserManager userManager,
             BookManager bookManager, BookHistoryManager bookHistoryManager)
@@ -32,7 +33,16 @@ namespace Library.Views
             addRequestWindowVm = new AddRequestWindowViewModel(requestManager, userManager, 
                 bookManager, bookHistoryManager);
             addRequestWindowVm.Title = "Добавить запрос";
+            addRequestWindowVm.EndWork += EndWork_Executed;
             this.DataContext = addRequestWindowVm;
+            
+        }
+
+        private void EndWork_Executed(object? sender, EventArgs e)
+        {
+            this.DialogResult = addRequestWindowVm.DialogResult;
+            this.NewRequest = addRequestWindowVm.NewRequest;
+            this.Close();
         }
     }
 }

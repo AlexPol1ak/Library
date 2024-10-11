@@ -156,7 +156,9 @@
 
                         <ComboBox Grid.Column="0" Margin="20 10 20 10"
                                   ItemsSource="{Binding RequestStatusList}"
-                                  SelectedItem="{Binding SelectedRequestStatus}"
+                                  SelectedItem="{Binding SelectedRequestStatus,
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
                                   />
 
                     </Grid>

@@ -208,6 +208,7 @@ namespace Library.ViewModels
             }            
         }
         #endregion
+
         #region Requests Commands
         private ICommand _addRequestCmd;
         private ICommand _deleteRequestCmd;
@@ -224,14 +225,22 @@ namespace Library.ViewModels
             AddRequestWindow addRequestWindow = new(
                 requestManager, userManager, bookManager, bookHistoryManager
                 );
-            addRequestWindow.ShowDialog();
+
+            var result = addRequestWindow.ShowDialog();
+            if(result == true)
+            {
+                updateRequestData();
+                Request? newRequest = addRequestWindow.NewRequest;
+                if (newRequest != null && Requests.Contains(newRequest))
+                    SelectedRequest = newRequest;               
+            }
         }
         #endregion
         #endregion
 
         #region Supporting Methods
         /// <summary>
-        /// Обновляет список книг.
+        /// Обновляет коллекцию книг.
         /// </summary>
         private void updateBookData()
         {
@@ -241,6 +250,20 @@ namespace Library.ViewModels
             foreach(Book book in bookManager.GetBooks())Books.Add(book);
             if(tempSelectedBook != null && Books.Contains(tempSelectedBook)) 
                 SelectedBook = tempSelectedBook;
+        }
+
+        /// <summary>
+        /// Обновляет коолекцию заявок.
+        /// </summary>
+        private void updateRequestData()
+        {
+            Request? tempSelectedRequest = SelectedRequest;
+            Requests.Clear();
+            SelectedRequest = null;
+            foreach (Request request in requestManager.GetRequests())Requests.Add(request);
+            if(tempSelectedRequest != null && Requests.Contains(tempSelectedRequest))
+                SelectedRequest = tempSelectedRequest;
+            
         }
         #endregion
     }
