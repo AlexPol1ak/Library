@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Library"
         xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Style="{StaticResource MaterialDesignWindow}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
@@ -148,7 +149,8 @@
                         </Button>
 
                         <Button Grid.Column="3" ToolTip="Реализовать заявку" 
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource MainWindowBntStyle}"
+                                Command="{Binding RealizeRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Read" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
@@ -160,7 +162,13 @@
                                   SelectedItem="{Binding SelectedRequestStatus,
                                                 Mode=TwoWay,
                                                 UpdateSourceTrigger=PropertyChanged}"
-                                  />
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding QueryFilterCmd}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
 
                     </Grid>
 

@@ -4,6 +4,7 @@ using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
 using Library.Views;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.ViewModels
 {
@@ -212,16 +214,22 @@ namespace Library.ViewModels
         #region Requests Commands
         private ICommand _addRequestCmd;
         private ICommand _deleteRequestCmd;
-        private ICommand _realizationRequestCmd;
+        private ICommand _realizeRequestCmd;
+        private ICommand _queryFilterCmd;
         public ICommand AddRequestCmd => _addRequestCmd ??= 
             new  RelayCommand(addRequestExecuted);
         public ICommand DeleteRequestCmd => _deleteRequestCmd ??=
-            new RelayCommand(deleteRequestExecuted, (obj)=>SelectedRequest != null);
-
+            new RelayCommand(deleteRequestExecuted, (obj)=>SelectedRequest != null);    
+        public ICommand RealizeRequestCmd => _realizeRequestCmd ??=
+            new RelayCommand(realizeRequestExecuted, canRealizeRequest);
+        public ICommand QueryFilterCmd => _queryFilterCmd ??=
+            new RelayCommand(queryFilterExecuted);
+        
         /// <summary>
-        /// Обработчик для команды Добавить заявку.
-        /// Добавляет заявку на выдачу книги.
+        /// Обработчик команды создания заявки.
+        /// Открывает окно создания заявки.
         /// </summary>
+        /// <param name="obj"></param>
         private void addRequestExecuted(object obj)
         {
             AddRequestWindow addRequestWindow = new(
@@ -251,6 +259,70 @@ namespace Library.ViewModels
                 requestManager.SaveChanges();
                 updateRequestData();              
             }
+        }
+
+        /// <summary>
+        /// Проверяет может ли быть реализована заявка.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        private bool canRealizeRequest(object arg)
+        {
+            return (SelectedRequest != null && SelectedRequest.Book.Rack != null);
+        }
+
+        /// <summary>
+        /// Обработчик для команды реализации заявки.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void realizeRequestExecuted(object obj)
+        {
+            DateTime currentDate = DateTime.Now;
+            BookHistory bookHistory = new(currentDate);
+            bookHistory.User = SelectedRequest.User;
+            bookHistory.Book = SelectedRequest.Book;
+            SelectedRequest.IssueDate = currentDate;
+
+            bookHistoryManager.CreateBookHistory(bookHistory);
+            requestManager.UpdateRequest(SelectedRequest);
+            requestManager.SaveChanges();
+            updateRequestData();
+
+        }
+
+        /// <summary>
+        /// Обработчик команды фильтрации заявок.
+        /// Отображает заявки согласно выбранному фильтру.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void queryFilterExecuted(object obj)
+        {
+            switch (SelectedRequestStatus)
+            {
+                case RequestStatus.Все:
+                    {
+                        updateRequestData();
+                    }
+                    break;
+                case RequestStatus.Выданные:
+                    {
+                        Requests.Clear();
+                        SelectedRequest = null;
+                        foreach(Request request in requestManager.FindRequest(r=>r.IssueDate != null))
+                            Requests.Add(request);
+                    }
+                    break;
+                case RequestStatus.Очередь:
+                    {
+                        Requests.Clear();
+                        SelectedRequest = null;
+                        foreach (Request request in requestManager.FindRequest(r => r.IssueDate == null))
+                            Requests.Add(request);
+                    }
+                    break;
+            }
+            
         }
         #endregion
         #endregion

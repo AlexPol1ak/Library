@@ -153,7 +153,8 @@ namespace Library.ViewModels
                 if(resultMb == MessageBoxResult.OK)
                 {
                     newRequest.IssueDate = null;
-                    requestManager.CreateRequest(newRequest) ;                   
+                    requestManager.CreateRequest(newRequest);
+                    requestManager.SaveChanges();
 
                     NewRequest = newRequest;
                     DialogResult = true;
@@ -294,9 +295,7 @@ namespace Library.ViewModels
             }
 
             return DateOnly.MaxValue;
-        }
-
-        
+        }        
 
     }
 }
