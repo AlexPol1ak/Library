@@ -139,7 +139,8 @@
                         </Button>
 
                         <Button Grid.Column="2" ToolTip="Удалить заявку" 
-                                 Style="{StaticResource MainWindowBntStyle}">
+                                 Style="{StaticResource MainWindowBntStyle}"
+                                Command="{Binding DeleteRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Delete" Width="30" Height="30"
                                             Foreground="Black" FontWeight="Bold"/>

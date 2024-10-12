@@ -215,6 +215,8 @@ namespace Library.ViewModels
         private ICommand _realizationRequestCmd;
         public ICommand AddRequestCmd => _addRequestCmd ??= 
             new  RelayCommand(addRequestExecuted);
+        public ICommand DeleteRequestCmd => _deleteRequestCmd ??=
+            new RelayCommand(deleteRequestExecuted, (obj)=>SelectedRequest != null);
 
         /// <summary>
         /// Обработчик для команды Добавить заявку.
@@ -233,6 +235,21 @@ namespace Library.ViewModels
                 Request? newRequest = addRequestWindow.NewRequest;
                 if (newRequest != null && Requests.Contains(newRequest))
                     SelectedRequest = newRequest;               
+            }
+        }
+
+        /// <summary>
+        /// Обработчик для команды Удалить заявку.
+        /// Удаляет заявку, Обновляет данные в ListView.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void deleteRequestExecuted(object obj)
+        {
+            if(SelectedRequest != null)
+            {
+                requestManager.DeleteRequest(SelectedRequest);
+                requestManager.SaveChanges();
+                updateRequestData();              
             }
         }
         #endregion
