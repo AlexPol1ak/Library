@@ -38,6 +38,36 @@ namespace Library.ViewModels
             initCollections();
         }
 
+        #region Start initialization
+        // Инициализация отобржаемых данных при запуске программы.
+        /// <summary>
+        /// Инициализация менеджеров.
+        /// </summary>
+        private void initManagers()
+        {
+            authorManager = mf.AuthorManager;
+            bookManager = mf.BookManager;
+            bookHistoryManager = mf.BookHistoryManager;
+            genreManager = mf.GenreManager;
+            rackManager = mf.RackManager;
+            requestManager = mf.RequestManager;
+            stuffManager = mf.StuffManager;
+            userManager = mf.UserManager;
+            termManager = mf.TermManager;
+        }
+
+        /// <summary>
+        /// Начальная инициализация коллекций
+        /// </summary>
+        private void initCollections()
+        {
+
+            Books = new ObservableCollection<Book>(bookManager.GetBooks("Authors", "Genre", "Rack"));
+            Requests = new ObservableCollection<Request>(requestManager.GetRequests("User", "Book"));
+            Users = new ObservableCollection<User>(userManager.GetUsers("Requests"));
+        }
+        #endregion
+
         #region Managers
         ManagersFactory mf;
         private AuthorManager authorManager;
@@ -76,7 +106,7 @@ namespace Library.ViewModels
         }
         #endregion
 
-        #region Selected
+        #region Selected elements
         // Выбор пользователя 
         private Book? _selectedBook = null;
         public Book? SelectedBook
@@ -125,37 +155,7 @@ namespace Library.ViewModels
             }
         }
         #endregion
-   
-        #region Start initialization
-        // Инициализация отобржаемых данных при запуске программы.
-        /// <summary>
-        /// Инициализация менеджеров.
-        /// </summary>
-        private void initManagers()
-        {
-            authorManager = mf.AuthorManager;
-            bookManager = mf.BookManager;
-            bookHistoryManager = mf.BookHistoryManager;
-            genreManager = mf.GenreManager;
-            rackManager = mf.RackManager;
-            requestManager = mf.RequestManager;
-            stuffManager = mf.StuffManager;
-            userManager = mf.UserManager;
-            termManager = mf.TermManager;
-        }
-
-        /// <summary>
-        /// Начальная инициализация коллекций
-        /// </summary>
-        private void initCollections()
-        {
-
-            Books = new ObservableCollection<Book>(bookManager.GetBooks("Authors", "Genre", "Rack"));
-            Requests = new ObservableCollection<Request>(requestManager.GetRequests("User", "Book"));
-            Users = new ObservableCollection<User>(userManager.GetUsers("Requests"));
-        }
-        #endregion
-
+          
         #region Commands
         #region Books Commands
         // Команда удалить книгу.
@@ -309,7 +309,7 @@ namespace Library.ViewModels
                     {
                         Requests.Clear();
                         SelectedRequest = null;
-                        foreach(Request request in requestManager.FindRequest(r=>r.IssueDate != null))
+                        foreach (Request request in requestManager.FindRequest(r => r.IssueDate != null))
                             Requests.Add(request);
                     }
                     break;
@@ -322,9 +322,16 @@ namespace Library.ViewModels
                     }
                     break;
             }
-            
+
         }
         #endregion
+
+        #region Users Commands
+        private ICommand _addUserCmd;
+        private ICommand _deleteUserCmd;
+        private ICommand _returnBookCmd;
+        #endregion
+
         #endregion
 
         #region Supporting Methods

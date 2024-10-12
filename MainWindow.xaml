@@ -90,7 +90,7 @@
             <!--#endregion-->
 
             <!--#region REQUESTS-->
-            <TabItem IsSelected="True">
+            <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Заявки" FontSize="20" />
                 </TabItem.Header>
@@ -179,7 +179,7 @@
             <!--#endregion-->
 
             <!--#region READERS-->
-            <TabItem>
+            <TabItem IsSelected="True">
                 <TabItem.Header>
                     <TextBlock Text="Читатели" FontSize="20" />
                 </TabItem.Header>
