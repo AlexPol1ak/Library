@@ -209,6 +209,40 @@ namespace Library.ViewModels
                     InfoText = $"{user.FullName}:\nНесданных книг — {numberBooks}.\nВыдача новых книг запрещена.";
             }
         }
+        /// <summary>
+        /// Команда выбора для события выбор книги
+        /// </summary>
+        private ICommand _selectBookCmd;
+        public ICommand SelectBookCmd => _selectBookCmd ??=
+            new RelayCommand(selectBookExecuted);
+        /// <summary>
+        /// Обработчик команды выбора книги.
+        /// Изменяет текст в информационном блоке.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void selectBookExecuted(object obj)
+        {
+            if(SelectedBookIndex != null)
+            {
+                Book book = Books[SelectedBookIndex.Value];
+                string bookInfo = $"{book.Name}. Стр. - {book.NumberPages}\n";
+                InfoText = bookInfo;
+              
+                if(book.Rack != null)
+                {
+                    InfoText += $"Находится на стеллаже - {book.Rack.Name}";
+                }
+                else
+                {
+                    DateOnly? returnDate =( AddRequestWindowViewModel.checkReturnBook(book))?? DateOnly.MinValue;
+
+                    InfoText += $"Находится у читателя." +
+                        $" Дата возвращения до {returnDate.Value.ToShortDateString()}\n" +
+                        $"Заявка будет поставлена в очередь";
+                }
+
+            }
+        }
 
         /// <summary>
         /// Проверяет, можно ли читателю выдать книгу
@@ -240,7 +274,7 @@ namespace Library.ViewModels
         /// Возвращает максимальную дату возврата книги.
         /// </summary>
         /// <param name="book">Книга</param>
-        /// <returns>null-Если книга на полке или дата возврата книги. </returns>
+        /// <returns>null-Если книга на полке иначе дата возврата книги. </returns>
         protected static DateOnly? checkReturnBook(Book book)
         {
             if(book.Rack != null) return null;

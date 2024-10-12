@@ -54,7 +54,13 @@
                       StaysOpenOnEdit="True"
                       ItemsSource="{Binding Books}" 
                       SelectedIndex="{Binding SelectedBookIndex}"
-                      />
+                      >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectBookCmd}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
         </GroupBox>
         
         <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{x:Null}" 
