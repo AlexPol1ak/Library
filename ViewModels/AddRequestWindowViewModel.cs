@@ -15,6 +15,7 @@ namespace Library.ViewModels
 {
     public class AddRequestWindowViewModel : ViewModelBase
     {
+        #region Data
         public EventHandler<EventArgs> EndWork;
         public bool? DialogResult { get; private set; } = false;
         public Request? NewRequest { get; private set; } = null;
@@ -55,6 +56,7 @@ namespace Library.ViewModels
             get => _infoText;
             set { Set(ref _infoText, value); }
         }
+        #endregion
 
         public AddRequestWindowViewModel(RequestManager requestManager, UserManager userManager,
             BookManager bookManager, BookHistoryManager bookHistoryManager)
@@ -78,12 +80,15 @@ namespace Library.ViewModels
                 OrderBy(b => b.Name).ToList();
             foreach (Book book in tempBooks) Books.Add(book);
 
-            if (Users.Count > 0) SelectedUserIndex = 0;
-            if (Books.Count > 0) SelectedBookIndex = 0;
+            SelectedBookIndex = null;
+            SelectedUserIndex = null ;
 
             InfoText = "Информация о заявке";
         }
 
+        /// <summary>
+        /// Команда сохранения заявки
+        /// </summary>
         private ICommand _saveCmd;
         public ICommand SaveCmd => _saveCmd ??=
             new RelayCommand(
@@ -91,20 +96,23 @@ namespace Library.ViewModels
                 canAddRequestExecuted
                 );
 
+        /// <summary>
+        /// Проверяет возможность сохранения заявки на книгу.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private bool canAddRequestExecuted(object arg)
         {
-            if(SelectedUserIndex == null || SelectedBookIndex == null) return false;
-
-            if (!checkUserLimit(Users[SelectedUserIndex.Value]))
-            {
-                InfoText = "У читателя исчерпан лимит выдачи книг." +
-                    " Необходимо вернуть взятые рание книги.";
-                return false;
-            }
+            if(SelectedUserIndex == null || SelectedBookIndex == null ||
+                !checkUserLimit(Users[SelectedUserIndex.Value], out int numberBooks))
+                return false;        
 
             return true;
         }
-
+        /// <summary>
+        /// Обрабочтик команды сохранения заявки на книгу.
+        /// </summary>
+        /// <param name="obj"></param>
         private void addRequestExecuted(object obj)
         {
 
@@ -154,10 +162,17 @@ namespace Library.ViewModels
             }                   
         }
 
+        /// <summary>
+        /// Команда отмены созданиния заявки.
+        /// </summary>
         private ICommand _cancelCmd;
         public ICommand CancelCmd => _cancelCmd ??=
             new RelayCommand(cancelExecuted);
 
+        /// <summary>
+        /// Обработчик команды отмены создания заявки
+        /// </summary>
+        /// <param name="obj"></param>
         private void cancelExecuted(object obj)
         {
             DialogResult = false;
@@ -165,14 +180,45 @@ namespace Library.ViewModels
         }
 
         /// <summary>
+        /// Команды выбора для события выбора читателя
+        /// </summary>
+        private ICommand _selectedUserCmd;
+        public ICommand SelectUserCmd => _selectedUserCmd ??=
+            new RelayCommand(selectUserExecuted);
+
+        /// <summary>
+        /// Обрабочтик команды выбора читателя
+        /// </summary>
+        /// <param name="obj"></param>
+        private void selectUserExecuted(object obj)
+        {
+            if (SelectedUserIndex != null)
+            {
+                User user = Users[SelectedUserIndex.Value];
+                int numberBooks;
+                bool result = AddRequestWindowViewModel.checkUserLimit(user, out numberBooks);
+
+                if (result)
+                {
+                    if (numberBooks == 0)
+                        InfoText = $"{user.FullName}:\nУ читателя нет несданных книг.";
+                    else
+                        InfoText = $"{user.FullName}:\nНесданных книг — {numberBooks}.";
+                }
+                else
+                    InfoText = $"{user.FullName}:\nНесданных книг — {numberBooks}.\nВыдача новых книг запрещена.";
+            }
+        }
+
+        /// <summary>
         /// Проверяет, можно ли читателю выдать книгу
         /// </summary>
         /// <param name="user">Читатель</param>
-        /// <param name="maxBook">Максимальное количество книг у читателя</param>
-        /// <returns>fasle- если читателю нельзя выдать книгу, иначе true</returns>
-        protected  static bool checkUserLimit(User user, int maxBook = 3)
+        /// <param name="numberBooks">Количество не сданных книг у читателя</param>
+        /// <param name="maxBook">Максимальное количество книг не сданных книг у читателя</param>
+        /// <returns>true-если количесто не сданнных некиг не привыщает максимальное допустимое значение, иначе false.</returns>
+        protected static bool checkUserLimit(User user, out int numberBooks, int maxBook = 3)
         {
-            List<Book> userBooks = new();
             int counter = 0;
             
             foreach(Request request in user.Requests.Where(r=>r.IssueDate != null))
@@ -182,8 +228,11 @@ namespace Library.ViewModels
                     if(bookHistory.ReturnDate == null) counter++;
                 }
             }
-            
-            if(counter >= maxBook) return false;
+
+            numberBooks = counter;
+
+            if (counter >= maxBook) return false;        
+
             return true;
         }
 
