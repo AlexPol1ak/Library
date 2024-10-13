@@ -357,6 +357,13 @@ namespace Library.ViewModels
         {
             AddUserWindow addUserWindow = new(userManager);
             var result = addUserWindow.ShowDialog();
+            if(result == true)
+            {
+                updateUserData();
+                User? newUser = addUserWindow.NewUser;
+                if(newUser != null && Users.Contains(newUser))
+                    SelectedUser = newUser;
+            }
         }
 
         private void deleteUserExecuted(object obj)
@@ -399,6 +406,19 @@ namespace Library.ViewModels
             if(tempSelectedRequest != null && Requests.Contains(tempSelectedRequest))
                 SelectedRequest = tempSelectedRequest;
             
+        }
+
+        /// <summary>
+        /// Обновляет коллекцию читателей.
+        /// </summary>
+        private void updateUserData()
+        {
+            User? tempSelectedUser = SelectedUser;
+            Users.Clear();
+            SelectedUser = null;
+            foreach(User user in userManager.GetUsers())Users.Add(user);
+            if(tempSelectedUser != null && Users.Contains(tempSelectedUser))
+                SelectedUser = tempSelectedUser;
         }
         #endregion
     }

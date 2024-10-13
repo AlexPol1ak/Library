@@ -25,19 +25,78 @@
         </Grid.ColumnDefinitions>
 
         <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                  Margin="5" BorderThickness="0" Style="{x:Null}">
+                  Margin="8" BorderThickness="0" Style="{x:Null}">
             <GroupBox.Header>
-                <TextBlock Text="Имя" FontSize="16"/>
+                <TextBlock Text="Фамилия" FontSize="16"/>
             </GroupBox.Header>
             <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="45">
-                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" 
-                 Mode="TwoWay" ValidatesOnDataErrors="True">
+                <Binding Path="LastName" UpdateSourceTrigger="PropertyChanged" 
+                         Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <DataErrorValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
         </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+          Margin="8" BorderThickness="0" Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Имя" FontSize="16"/>
+            </GroupBox.Header>
+            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="45">
+                <Binding Path="FirstName" UpdateSourceTrigger="PropertyChanged" 
+                         Mode="TwoWay" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                   Margin="8" BorderThickness="0" Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Отчество" FontSize="16"/>
+            </GroupBox.Header>
+            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="45">
+                <Binding Path="Patronymic" UpdateSourceTrigger="PropertyChanged" 
+                         Mode="TwoWay" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+          Margin="8" BorderThickness="0" Style="{x:Null}">
+            <GroupBox.Header>
+                <TextBlock Text="Email" FontSize="16"/>
+            </GroupBox.Header>
+            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="45">
+                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" 
+                         Mode="TwoWay" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
+        </GroupBox>
+
+        <Button Grid.Row="4" Style="{StaticResource BtnStyle}" Margin="30 20 30 30"
+                 Command="{Binding UserSaveCmd}">
+            <Button.Content>
+                <TextBlock Text="Сохранить"/>
+            </Button.Content>
+        </Button>
+        <Button Grid.Row="4" Grid.Column="1"
+                Style="{StaticResource BtnStyle}" Margin="30 20 30 30"
+                Command="{Binding UserCancelCmd}">
+            <Button.Content>
+                <TextBlock Text="Отмена"/>
+            </Button.Content>
+        </Button>
 
     </Grid>
 </Window>

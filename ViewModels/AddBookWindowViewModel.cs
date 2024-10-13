@@ -187,12 +187,12 @@ namespace Library.ViewModels
             EndWork?.Invoke(this, new EventArgs());
         }
 
-        // Команада закрытия окна
+        // Команда закрытия окна
         private ICommand _cancelCmd;
         public ICommand CancelCmd => _cancelCmd ??=
             new RelayCommand((id)=>EndWork?.Invoke(this, new EventArgs()));
 
-        // Команада добавления автора к добавляймой книге
+        // Команда добавления автора к добавляемой книге
         private ICommand _addAuthorCmd;
         public ICommand AddAuthorCmd => _addAuthorCmd ??=
             new RelayCommand(addAuthorExecuted,
