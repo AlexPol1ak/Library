@@ -31,7 +31,7 @@
             <GroupBox.Header>
                 <TextBlock Text="Название" FontSize="16"/>
             </GroupBox.Header>
-            <TextBox  Style="{StaticResource AddBookWndTextBoxStyle}" MaxLength="45">
+            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="45">
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" 
                          Mode="TwoWay" ValidatesOnDataErrors="True" 
                          >
@@ -49,7 +49,7 @@
             <GroupBox.Header>
                 <TextBlock Text="Количество страниц" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Style="{StaticResource TextBoxStyle}"
                      Margin="40 0 40 0" MaxLength="4">
                 <TextBox.Text>
                     <Binding Path="NumberPages" UpdateSourceTrigger="PropertyChanged"
@@ -69,7 +69,7 @@
             <GroupBox.Header>
                 <TextBlock Text="Год публикации" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Style="{StaticResource TextBoxStyle}"
                      Margin="40 0 40 0" MaxLength="4">
                 <TextBox.Text>
                     <Binding Path="PublicationYear" UpdateSourceTrigger="PropertyChanged"
@@ -127,7 +127,8 @@
                 </GroupBox>
 
                 <Button Grid.Row="0" Grid.Column="1"
-                        Style="{StaticResource AddBookWndBtnAuthorlStyle}"
+                        Style="{StaticResource BtnStyle}"
+                        Margin="2 2 2 2"
                         Command="{Binding RemoveAuthorCmd}">
                     <Button.Content>
                         <mdc:PackIcon Kind="Delete"                                   
@@ -151,7 +152,8 @@
                 </GroupBox>
 
                 <Button Grid.Row="1" Grid.Column="1"
-                        Style="{StaticResource AddBookWndBtnAuthorlStyle}"
+                        Style="{StaticResource BtnStyle}"
+                        Margin="2 2 2 2"
                         Command="{Binding AddAuthorCmd}">
                     <Button.Content>
                         <mdc:PackIcon Kind="ArrowTop"                                  
@@ -172,7 +174,7 @@
             <GroupBox.Header>
                 <TextBlock Text="Описание" FontSize="15"/>
             </GroupBox.Header>
-            <TextBox Style="{StaticResource AddBookWndTextBoxStyle}"
+            <TextBox Style="{StaticResource TextBoxStyle}"
                      HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
                      MaxLength="500"
                      >
@@ -189,14 +191,14 @@
         </GroupBox>
         <!--#endregion-->
         <!--#region BUTTONS-->
-        <Button Grid.Row="4" Style="{StaticResource AddBookWndBtnSaveCancelStyle}"
+        <Button Grid.Row="4" Style="{StaticResource BtnStyle}"
                 Command="{Binding SaveBookCmd}">
             <Button.Content>
                 <TextBlock Text="Сохранить"/>
             </Button.Content>
         </Button>
         <Button Grid.Row="4" Grid.Column="1"
-                Style="{StaticResource AddBookWndBtnSaveCancelStyle}"
+                Style="{StaticResource BtnStyle}"
                 Command="{Binding CancelCmd}">
             <Button.Content>
                 <TextBlock Text="Отмена"/>

@@ -70,18 +70,18 @@
             </GroupBox.Header>
             <TextBlock Text="{Binding InfoText, 
                        UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                       Style="{StaticResource AddRequestInfoTextBlockStyle}"
+                       Style="{StaticResource TextBlockStyle}" Margin="2"
                        TextWrapping="Wrap"/>
         </GroupBox>
 
-        <Button Grid.Row="2" Style="{StaticResource AddRequestdBtnSaveCancelStyle}"
+        <Button Grid.Row="2" Style="{StaticResource BtnStyle}" Margin="30 20 30 30"
                 Command="{Binding SaveCmd}">
             <Button.Content>
                 <TextBlock Text="Сохранить"/>
             </Button.Content>
         </Button>
         <Button Grid.Row="2" Grid.Column="1"
-                Style="{StaticResource AddRequestdBtnSaveCancelStyle}"
+                Style="{StaticResource BtnStyle}" Margin="30 20 30 30"
                 Command="{Binding CancelCmd}">
             <Button.Content>
                 <TextBlock Text="Отмена"/>

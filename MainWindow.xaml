@@ -63,7 +63,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0" ToolTip="Добавить книгу"
-                                Style="{StaticResource MainWindowBntStyle}" 
+                                Style="{StaticResource BtnStyle}"  
                                 Command="{Binding AddBookCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
@@ -72,7 +72,7 @@
                         </Button>
 
                         <Button Grid.Column="1" ToolTip="Удалить книгу"
-                                Style="{StaticResource MainWindowBntStyle}"
+                                Style="{StaticResource BtnStyle}"
                                 Command="{Binding DeleteBookCmd}"
                                 CommandParameter="{Binding SelectedBook}">
                             <Button.Content>
@@ -131,7 +131,7 @@
 
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="1" ToolTip="Добавить заявку"
-                                Style="{StaticResource MainWindowBntStyle}"
+                                Style="{StaticResource BtnStyle}"
                                 Command="{Binding AddRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
@@ -140,7 +140,7 @@
                         </Button>
 
                         <Button Grid.Column="2" ToolTip="Удалить заявку" 
-                                 Style="{StaticResource MainWindowBntStyle}"
+                                 Style="{StaticResource BtnStyle}"
                                 Command="{Binding DeleteRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Delete" Width="30" Height="30"
@@ -149,7 +149,7 @@
                         </Button>
 
                         <Button Grid.Column="3" ToolTip="Реализовать заявку" 
-                                Style="{StaticResource MainWindowBntStyle}"
+                                Style="{StaticResource BtnStyle}"
                                 Command="{Binding RealizeRequestCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Read" Width="30" Height="30"
@@ -220,7 +220,8 @@
                         </Grid.ColumnDefinitions>
                         
                         <Button Grid.Column="0" ToolTip="Добавить читателя"
-                                 Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource BtnStyle}"
+                                Command="{Binding AddUserCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Add" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
@@ -228,7 +229,8 @@
                         </Button>
 
                         <Button Grid.Column="1" ToolTip="Удалить читателя"
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource BtnStyle}"
+                                Command="{Binding DeleteUserCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Minus" Width="30" Height="30"
                                                 Foreground="Black" FontWeight="Bold"/>
@@ -236,7 +238,8 @@
                         </Button>
 
                         <Button Grid.Column="4" ToolTip="Вернуть книгу"
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource BtnStyle}"
+                                Command="{Binding ReturnBookCmd}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="Book" Width="30" Height="30"
                                             Foreground="Black" FontWeight="Bold"/>
@@ -278,7 +281,7 @@
                                 />
                         
                         <Button Grid.Column="2" ToolTip="Показать диаграмму" 
-                                Style="{StaticResource MainWindowBntStyle}">
+                                Style="{StaticResource BtnStyle}">
                             <Button.Content>
                                 <mdc:PackIcon Kind="ShowChart" Width="30" Height="30"
                                               Foreground="Black" FontWeight="Bold"/>

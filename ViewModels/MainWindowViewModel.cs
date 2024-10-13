@@ -330,6 +330,45 @@ namespace Library.ViewModels
         private ICommand _addUserCmd;
         private ICommand _deleteUserCmd;
         private ICommand _returnBookCmd;
+
+        public ICommand AddUserCmd => _addUserCmd ??=
+            new RelayCommand(addUserExecuted);
+
+        public ICommand DeleteUserCmd => _deleteUserCmd ??=
+            new RelayCommand(deleteUserExecuted, userSelected);
+
+        public ICommand ReturnBookCmd => _returnBookCmd ??=
+            new RelayCommand(returnBookExecuted, userSelected);
+
+        /// <summary>
+        /// Проверяет выбран ли читатель.
+        /// </summary>
+        private bool userSelected(object obj)
+        {
+            return SelectedUser != null;
+        }
+        
+        /// <summary>
+        /// Обработчик команды добавления читателя.
+        /// Открывает окно создания профиля читателя.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void addUserExecuted(object obj)
+        {
+            AddUserWindow addUserWindow = new(userManager);
+            var result = addUserWindow.ShowDialog();
+        }
+
+        private void deleteUserExecuted(object obj)
+        {
+            MessageBox.Show("Delete user");
+        }
+
+        private void returnBookExecuted(object obj)
+        {
+            MessageBox.Show("return book");
+        }
+
         #endregion
 
         #endregion
