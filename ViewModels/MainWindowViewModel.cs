@@ -209,6 +209,23 @@ namespace Library.ViewModels
                 SelectedBook = newBook;                
             }            
         }
+
+        private ICommand _returnBookCmd;
+        public ICommand ReturnBookCmd => _returnBookCmd ??=
+            new RelayCommand(returnBookExecuted);
+
+        /// <summary>
+        /// Обработчик команды Вернуть книгу.
+        /// Открывает окно возврата книги.
+        /// </summary>
+        /// <param name="obj"></param>
+        private void returnBookExecuted(object obj)
+        {
+            ReturnBooksWindow returnBooksWindow = new(bookHistoryManager);
+            returnBooksWindow.ShowDialog();
+
+        }
+
         #endregion
 
         #region Requests Commands
@@ -328,17 +345,13 @@ namespace Library.ViewModels
 
         #region Users Commands
         private ICommand _addUserCmd;
-        private ICommand _deleteUserCmd;
-        private ICommand _returnBookCmd;
+        private ICommand _deleteUserCmd;        
 
         public ICommand AddUserCmd => _addUserCmd ??=
             new RelayCommand(addUserExecuted);
 
         public ICommand DeleteUserCmd => _deleteUserCmd ??=
             new RelayCommand(deleteUserExecuted, userSelected);
-
-        public ICommand ReturnBookCmd => _returnBookCmd ??=
-            new RelayCommand(returnBookExecuted, userSelected);
 
         /// <summary>
         /// Проверяет выбран ли читатель.
@@ -407,12 +420,7 @@ namespace Library.ViewModels
                 }
                              
             }
-        }
-
-        private void returnBookExecuted(object obj)
-        {
-            MessageBox.Show("return book");
-        }
+        }       
 
         #endregion
 
