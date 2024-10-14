@@ -366,9 +366,47 @@ namespace Library.ViewModels
             }
         }
 
+        /// <summary>
+        /// Удаляет читателя.
+        /// </summary>
+        /// <param name="obj"></param>
         private void deleteUserExecuted(object obj)
         {
-            MessageBox.Show("Delete user");
+            if(SelectedUser != null)
+            {
+                //Проверяет перед удалением сданы ли у читателя книги.
+                List<BookHistory> bookHistory = new();
+                bookHistory = bookHistoryManager.FindBookHistory(h=>h.User== SelectedUser && h.ReturnDate == null).ToList();
+                if (bookHistory.Count > 0)
+                {
+                    string booksName = string.Empty;
+                    foreach (BookHistory bookHistoryItem in bookHistory) 
+                        booksName += bookHistoryItem.Book.Name + "\n";
+
+                    string msg = $"Невозможно удалить читателя {SelectedUser.FullName}\n" +
+                        $"У читателя не сданы книги:\n{booksName}";
+                    MessageBox.Show(msg,"Удаление", MessageBoxButton.OK, MessageBoxImage.Error);
+                }                  
+                else
+                {
+                    // Если книги сданы запрос подтверждения на удаления читателя
+                    var result = MessageBox.Show($"Удалить читателя\n{SelectedUser.FullName}?",
+                    "Удалить читателя",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                    //Удаление читателя
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        userManager.DeleteUser(SelectedUser);
+                        userManager.SaveChanges();
+                        SelectedUser = null;
+                        updateUserData();
+                        updateRequestData();
+                    }
+                }
+                             
+            }
         }
 
         private void returnBookExecuted(object obj)
