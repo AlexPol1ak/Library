@@ -21,15 +21,21 @@ namespace Library.Views
     /// </summary>
     public partial class ReturnBooksWindow : Window
     {
-        public ReturnBooksWindow(BookHistoryManager bookHistory)
+        public ReturnBooksWindow(BookHistoryManager bookHistory, RackManager rackManager)
         {
             InitializeComponent();
-            returnBooksVm = new ReturnBooksViewModel(bookHistory);
+            returnBooksVm = new ReturnBooksViewModel(bookHistory, rackManager);
             returnBooksVm.Title = "Вернуть книгу";
+            returnBooksVm.EndWork += endWorkExecuted;
             this.DataContext = returnBooksVm;
         }
 
         private ReturnBooksViewModel returnBooksVm;
-
+        private void endWorkExecuted(object? sender, EventArgs e)
+        {
+            DialogResult = returnBooksVm.DialogResult;
+            this.Close();
+        }
+      
     }
 }

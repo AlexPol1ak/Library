@@ -221,7 +221,7 @@ namespace Library.ViewModels
         /// <param name="obj"></param>
         private void returnBookExecuted(object obj)
         {
-            ReturnBooksWindow returnBooksWindow = new(bookHistoryManager);
+            ReturnBooksWindow returnBooksWindow = new(bookHistoryManager, rackManager);
             returnBooksWindow.ShowDialog();
 
         }
@@ -295,9 +295,10 @@ namespace Library.ViewModels
         private void realizeRequestExecuted(object obj)
         {
             DateTime currentDate = DateTime.Now;
-            BookHistory bookHistory = new(currentDate);
+            BookHistory bookHistory = new(currentDate);           
             bookHistory.User = SelectedRequest.User;
             bookHistory.Book = SelectedRequest.Book;
+            bookHistory.Book.Rack = null;
             SelectedRequest.IssueDate = currentDate;
 
             bookHistoryManager.CreateBookHistory(bookHistory);

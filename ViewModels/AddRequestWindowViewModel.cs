@@ -110,7 +110,7 @@ namespace Library.ViewModels
             return true;
         }
         /// <summary>
-        /// Обрабочтик команды сохранения заявки на книгу.
+        /// Обработчик команды сохранения заявки на книгу.
         /// </summary>
         /// <param name="obj"></param>
         private void addRequestExecuted(object obj)
@@ -164,7 +164,7 @@ namespace Library.ViewModels
         }
 
         /// <summary>
-        /// Команда отмены созданиния заявки.
+        /// Команда отмены создания заявки.
         /// </summary>
         private ICommand _cancelCmd;
         public ICommand CancelCmd => _cancelCmd ??=
@@ -188,7 +188,7 @@ namespace Library.ViewModels
             new RelayCommand(selectUserExecuted);
 
         /// <summary>
-        /// Обрабочтик команды выбора читателя
+        /// Обработчик команды выбора читателя
         /// </summary>
         /// <param name="obj"></param>
         private void selectUserExecuted(object obj)
@@ -210,6 +210,7 @@ namespace Library.ViewModels
                     InfoText = $"{user.FullName}:\nНесданных книг — {numberBooks}.\nВыдача новых книг запрещена.";
             }
         }
+
         /// <summary>
         /// Команда выбора для события выбор книги
         /// </summary>

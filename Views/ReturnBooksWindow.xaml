@@ -61,7 +61,8 @@
             <GroupBox.Header>
                 <TextBlock Text="Примечание" FontSize="16"/>
             </GroupBox.Header>
-            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="500">
+            <TextBox  Style="{StaticResource TextBoxStyle}" MaxLength="500" Margin="2"
+                      VerticalContentAlignment="Top" HorizontalContentAlignment="Left">
                 <Binding Path="Remarks" UpdateSourceTrigger="PropertyChanged" 
                          Mode="TwoWay" ValidatesOnDataErrors="True">
                 </Binding>

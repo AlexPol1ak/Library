@@ -8,20 +8,23 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Library.ViewModels
 {
     public class ReturnBooksViewModel : ViewModelBase
     {
-        public ReturnBooksViewModel(BookHistoryManager bookHistoryManager)
+        public ReturnBooksViewModel(BookHistoryManager bookHistoryManager, RackManager rackManager)
         {
             this.bookHistoryManager = bookHistoryManager;
+            this.rackManager = rackManager;
             initData();
         }
 
-        private UserManager userManager;
+        private RackManager rackManager;
         private BookHistoryManager bookHistoryManager;
+
         private string _title = string.Empty;
         public string Title
         {
@@ -32,6 +35,7 @@ namespace Library.ViewModels
 
             }
         }
+        public bool? DialogResult { get; private set; } = null;
         public EventHandler<EventArgs> EndWork { get; set; }
 
         public ObservableCollection<User> Users { get; private set; } = new();
@@ -57,11 +61,49 @@ namespace Library.ViewModels
             set { Set(ref _remarks, value); }
         }
 
-
-
         private ICommand _selectUserCmd;
         public ICommand SelectUserCmd => _selectUserCmd ??=
             new RelayCommand(selectUserExecuted);
+        private ICommand _returnBookCmd;
+        public ICommand ReturnBookCmd => _returnBookCmd ??=
+            new RelayCommand(returnBookExecuted, canReturnBook);
+        private ICommand _cancelCmd;
+        public ICommand CancelCmd => _cancelCmd ??=
+            new RelayCommand(cancelExecuted);
+
+        private void cancelExecuted(object obj)
+        {
+            DialogResult = false;
+            EndWork?.Invoke(this, EventArgs.Empty);
+        }
+
+        private bool canReturnBook(object arg)
+        {
+            if (SelectedBookIndex != null && SelectedUserIndex != null) return true;
+            return false;
+        }
+
+        private void returnBookExecuted(object obj)
+        {
+            Book book = Books[SelectedBookIndex!.Value];
+            foreach(BookHistory bookHistory in book.BookHistory)
+            {
+                if(bookHistory.User == Users[SelectedUserIndex!.Value])
+                {
+                    bookHistory.ReturnDate = DateTime.Now;
+                    bookHistory.Remarks = Remarks;
+                    Rack rack = rackManager.FindRack(r => r.Name.Contains(book.Genre.Name)).
+                        OrderBy(r => r.Books.Count).First();
+                    bookHistory.Book.Rack = rack;
+
+                    bookHistoryManager.UpdateBookHistory(bookHistory);
+                    bookHistoryManager.SaveChanges();
+                    break;
+                }
+            }
+            DialogResult = true;
+            EndWork?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Обработчик команды выбора читателя.
