@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace Library.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AddUserWindow.xaml
+    /// Окно добавления читателя.
     /// </summary>
     public partial class AddUserWindow : Window
     {

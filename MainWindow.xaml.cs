@@ -15,11 +15,13 @@ using System.Windows.Shapes;
 namespace Library
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Главное окно.
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowViewModel mainWindowViewModel;//ViewModel главного окна 
+        //ViewModel главного окна 
+        MainWindowViewModel mainWindowViewModel;  
+        // Фабрика менеджеров
         ManagersFactory managersFactory;
 
         public MainWindow()

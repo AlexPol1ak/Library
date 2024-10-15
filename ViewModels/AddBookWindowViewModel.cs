@@ -17,6 +17,9 @@ using System.Windows.Input;
 
 namespace Library.ViewModels
 {
+    /// <summary>
+    /// ViewModel окна добавления книги.
+    /// </summary>
     public class AddBookWindowViewModel : ViewModelBase, IDataErrorInfo
     {
         public event EventHandler EndWork;
@@ -142,6 +145,12 @@ namespace Library.ViewModels
         public ICommand SaveBookCmd => _saveBookCmd ??=
             new RelayCommand(saveBookExecuted, canSaveBook);
 
+        /// <summary>
+        /// Метод проверки возможности сохранения новой книги.
+        /// Проверяет ошибки флаги валидации
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private bool canSaveBook(object arg)
         {
             if (
@@ -267,7 +276,7 @@ namespace Library.ViewModels
             set { Set(ref _selectedAuthorsHasError, value); }
         }
 
-        public string Error => throw new NotImplementedException();
+        public string Error => string.Empty;
 
         public string this[string columnName]
         {
@@ -320,7 +329,7 @@ namespace Library.ViewModels
                         {
                             if(Description !=  null && Description.Length >500)
                             {
-                                error = $"Описание не должно привышать 500 символов";
+                                error = $"Описание не должно превышать 500 символов";
                                 DescriptionHasError = true;
                             }
                             else DescriptionHasError = false;

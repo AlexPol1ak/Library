@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace Library.Commands
 {
     /// <summary>
-    /// Класс дополнительных оконных команад.
+    /// Класс дополнительных оконных команд.
     /// </summary>
     static public class WindowCommands
     {

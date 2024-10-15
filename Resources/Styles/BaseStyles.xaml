@@ -4,7 +4,7 @@
                     >
 
 
-<!--Centerd-->
+<!--Centered-->
     <!--Базовые стили расположения элементов по центру.-->
     <Style x:Key="CenterAlignment" TargetType="FrameworkElement">
         <Setter Property="VerticalAlignment" Value="Center"/>

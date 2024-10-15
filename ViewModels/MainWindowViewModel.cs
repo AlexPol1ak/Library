@@ -39,7 +39,7 @@ namespace Library.ViewModels
         }
 
         #region Start initialization
-        // Инициализация отобржаемых данных при запуске программы.
+        // Инициализация отображаемых данных при запуске программы.
         /// <summary>
         /// Инициализация менеджеров.
         /// </summary>
@@ -188,6 +188,7 @@ namespace Library.ViewModels
             }
             updateBookData();
         }
+
         // Команда добавить книгу.
         private ICommand _addBookCmd;
         public ICommand AddBookCmd => _addBookCmd ??=
@@ -296,7 +297,7 @@ namespace Library.ViewModels
         {
             DateTime currentDate = DateTime.Now;
             BookHistory bookHistory = new(currentDate);           
-            bookHistory.User = SelectedRequest.User;
+            bookHistory.User = SelectedRequest!.User;
             bookHistory.Book = SelectedRequest.Book;
             bookHistory.Book.Rack = null;
             SelectedRequest.IssueDate = currentDate;
@@ -421,10 +422,8 @@ namespace Library.ViewModels
                 }
                              
             }
-        }       
-
+        }
         #endregion
-
         #endregion
 
         #region Supporting Methods
@@ -442,7 +441,7 @@ namespace Library.ViewModels
         }
 
         /// <summary>
-        /// Обновляет коолекцию заявок.
+        /// Обновляет коллекцию заявок.
         /// </summary>
         private void updateRequestData()
         {
@@ -451,8 +450,7 @@ namespace Library.ViewModels
             SelectedRequest = null;
             foreach (Request request in requestManager.GetRequests())Requests.Add(request);
             if(tempSelectedRequest != null && Requests.Contains(tempSelectedRequest))
-                SelectedRequest = tempSelectedRequest;
-            
+                SelectedRequest = tempSelectedRequest;            
         }
 
         /// <summary>

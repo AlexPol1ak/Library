@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace Library.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AddBookWindow.xaml
+    /// Окно добавления книги.
     /// </summary>
     public partial class AddBookWindow : Window
     {
@@ -37,7 +37,7 @@ namespace Library.Views
         }
 
         /// <summary>
-        /// Обработчик события заврешения работы окна.
+        /// Обработчик события завершения работы окна.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace Library.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ReturnBooksWindow.xaml
+    /// Окно возврата книги.
     /// </summary>
     public partial class ReturnBooksWindow : Window
     {
@@ -31,6 +31,11 @@ namespace Library.Views
         }
 
         private ReturnBooksViewModel returnBooksVm;
+
+        /// <summary>
+        /// Обработчик команды ViewModel завершения работы.
+        /// Завершает работу окна.
+        /// </summary>
         private void endWorkExecuted(object? sender, EventArgs e)
         {
             DialogResult = returnBooksVm.DialogResult;

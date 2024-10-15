@@ -71,27 +71,43 @@ namespace Library.ViewModels
         public ICommand CancelCmd => _cancelCmd ??=
             new RelayCommand(cancelExecuted);
 
+        /// <summary>
+        /// Обработчик для команды Отмена.
+        /// </summary>
+        /// <param name="obj"></param>
         private void cancelExecuted(object obj)
         {
             DialogResult = false;
             EndWork?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Проверяет возможность возврата книги.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private bool canReturnBook(object arg)
         {
             if (SelectedBookIndex != null && SelectedUserIndex != null) return true;
             return false;
         }
 
+        /// <summary>
+        /// Обработчик команды вернуть книгу.
+        /// </summary>
+        /// <param name="obj"></param>
         private void returnBookExecuted(object obj)
         {
+            // Возвращаемая книга.
             Book book = Books[SelectedBookIndex!.Value];
             foreach(BookHistory bookHistory in book.BookHistory)
             {
                 if(bookHistory.User == Users[SelectedUserIndex!.Value])
                 {
+                    // Запись в историю книги даты возврата и примечания
                     bookHistory.ReturnDate = DateTime.Now;
                     bookHistory.Remarks = Remarks;
+                    // Постановка книги на стеллаж
                     Rack rack = rackManager.FindRack(r => r.Name.Contains(book.Genre.Name)).
                         OrderBy(r => r.Books.Count).First();
                     bookHistory.Book.Rack = rack;

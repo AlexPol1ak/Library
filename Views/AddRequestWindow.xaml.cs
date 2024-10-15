@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace Library.Views
 {
     /// <summary>
-    /// Окно добавления заявки
+    /// Окно добавления заявки.
     /// </summary>
     public partial class AddRequestWindow : Window
     {
@@ -38,6 +38,10 @@ namespace Library.Views
             
         }
 
+        /// <summary>
+        /// Обработчик команды ViewModel завершения работы.
+        /// Завершает работу окна.
+        /// </summary>
         private void EndWork_Executed(object? sender, EventArgs e)
         {
             this.DialogResult = addRequestWindowVm.DialogResult;
