@@ -4,6 +4,9 @@ using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
 using Library.Views;
+using LiveCharts;
+using LiveCharts.Wpf;
+using MaterialDesignColors;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup.Localizer;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.ViewModels
@@ -31,7 +35,7 @@ namespace Library.ViewModels
 
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel( ManagersFactory managersFactory)
+        public MainWindowViewModel(ManagersFactory managersFactory)
         {
             mf = managersFactory;
             initManagers();
@@ -83,7 +87,7 @@ namespace Library.ViewModels
 
         #region Collections      
         // Коллекции привязок в главном окне
-        public ObservableCollection<Book> Books {  get; set; }
+        public ObservableCollection<Book> Books { get; set; }
         public ObservableCollection<Request> Requests { get; set; }
         public ObservableCollection<User> Users { get; set; }
 
@@ -95,15 +99,7 @@ namespace Library.ViewModels
             }
         }
 
-        private List<String> chartsVariants = new()
-        { "Количество книг, по годам издания", 
-          "Количество книг, выданных за определенный период",
-          "Cуммарное количество страниц по годам издания"
-        };
-        public IEnumerable<String> ChartsVariants
-        {
-            get => chartsVariants;           
-        }
+
         #endregion
 
         #region Selected elements
@@ -119,7 +115,7 @@ namespace Library.ViewModels
         public Request? SelectedRequest
         {
             get => _selectedRequest;
-            set { Set(ref _selectedRequest, value); } 
+            set { Set(ref _selectedRequest, value); }
         }
 
         private RequestStatus _selectedRequestStatus = RequestStatus.Все;
@@ -132,7 +128,7 @@ namespace Library.ViewModels
                 Set(ref _selectedRequestStatus, value);
             }
         }
-      
+
         private User? _selectedUser = null;
         public User? SelectedUser
         {
@@ -144,18 +140,8 @@ namespace Library.ViewModels
             }
         }
 
-        private int _selectedChartVariantIndex = 0;
-        public int SelectedChartVariantIndex
-        {
-            get { return _selectedChartVariantIndex; }
-            set
-            {
-                _selectedChartVariantIndex = value;
-                Set(ref _selectedChartVariantIndex, value);
-            }
-        }
         #endregion
-          
+
         #region Commands
         #region Books Commands
         // Команда удалить книгу.
@@ -184,7 +170,7 @@ namespace Library.ViewModels
                 {
                     bookManager.DeleteBook(book.BookId);
                     bookManager.SaveChanges();
-                }            
+                }
             }
             updateBookData();
         }
@@ -203,12 +189,12 @@ namespace Library.ViewModels
             addBookWindow.ShowDialog();
             Book? newBook = addBookWindow.NewBook;
             updateBookData();
-            if(newBook != null && Books.Contains(newBook))
+            if (newBook != null && Books.Contains(newBook))
             {
                 Books.Remove(newBook);
                 Books.Insert(0, newBook);
-                SelectedBook = newBook;                
-            }            
+                SelectedBook = newBook;
+            }
         }
 
         private ICommand _returnBookCmd;
@@ -234,15 +220,15 @@ namespace Library.ViewModels
         private ICommand _deleteRequestCmd;
         private ICommand _realizeRequestCmd;
         private ICommand _queryFilterCmd;
-        public ICommand AddRequestCmd => _addRequestCmd ??= 
-            new  RelayCommand(addRequestExecuted);
+        public ICommand AddRequestCmd => _addRequestCmd ??=
+            new RelayCommand(addRequestExecuted);
         public ICommand DeleteRequestCmd => _deleteRequestCmd ??=
-            new RelayCommand(deleteRequestExecuted, (obj)=>SelectedRequest != null);    
+            new RelayCommand(deleteRequestExecuted, (obj) => SelectedRequest != null);
         public ICommand RealizeRequestCmd => _realizeRequestCmd ??=
             new RelayCommand(realizeRequestExecuted, canRealizeRequest);
         public ICommand QueryFilterCmd => _queryFilterCmd ??=
             new RelayCommand(queryFilterExecuted);
-        
+
         /// <summary>
         /// Обработчик команды создания заявки.
         /// Открывает окно создания заявки.
@@ -255,12 +241,12 @@ namespace Library.ViewModels
                 );
 
             var result = addRequestWindow.ShowDialog();
-            if(result == true)
+            if (result == true)
             {
                 updateRequestData();
                 Request? newRequest = addRequestWindow.NewRequest;
                 if (newRequest != null && Requests.Contains(newRequest))
-                    SelectedRequest = newRequest;               
+                    SelectedRequest = newRequest;
             }
         }
 
@@ -271,11 +257,11 @@ namespace Library.ViewModels
         /// <param name="obj"></param>
         private void deleteRequestExecuted(object obj)
         {
-            if(SelectedRequest != null)
+            if (SelectedRequest != null)
             {
                 requestManager.DeleteRequest(SelectedRequest);
                 requestManager.SaveChanges();
-                updateRequestData();              
+                updateRequestData();
             }
         }
 
@@ -296,7 +282,7 @@ namespace Library.ViewModels
         private void realizeRequestExecuted(object obj)
         {
             DateTime currentDate = DateTime.Now;
-            BookHistory bookHistory = new(currentDate);           
+            BookHistory bookHistory = new(currentDate);
             bookHistory.User = SelectedRequest!.User;
             bookHistory.Book = SelectedRequest.Book;
             bookHistory.Book.Rack = null;
@@ -347,7 +333,7 @@ namespace Library.ViewModels
 
         #region Users Commands
         private ICommand _addUserCmd;
-        private ICommand _deleteUserCmd;        
+        private ICommand _deleteUserCmd;
 
         public ICommand AddUserCmd => _addUserCmd ??=
             new RelayCommand(addUserExecuted);
@@ -362,7 +348,7 @@ namespace Library.ViewModels
         {
             return SelectedUser != null;
         }
-        
+
         /// <summary>
         /// Обработчик команды добавления читателя.
         /// Открывает окно создания профиля читателя.
@@ -372,11 +358,11 @@ namespace Library.ViewModels
         {
             AddUserWindow addUserWindow = new(userManager);
             var result = addUserWindow.ShowDialog();
-            if(result == true)
+            if (result == true)
             {
                 updateUserData();
                 User? newUser = addUserWindow.NewUser;
-                if(newUser != null && Users.Contains(newUser))
+                if (newUser != null && Users.Contains(newUser))
                     SelectedUser = newUser;
             }
         }
@@ -387,21 +373,21 @@ namespace Library.ViewModels
         /// <param name="obj"></param>
         private void deleteUserExecuted(object obj)
         {
-            if(SelectedUser != null)
+            if (SelectedUser != null)
             {
                 //Проверяет перед удалением сданы ли у читателя книги.
                 List<BookHistory> bookHistory = new();
-                bookHistory = bookHistoryManager.FindBookHistory(h=>h.User== SelectedUser && h.ReturnDate == null).ToList();
+                bookHistory = bookHistoryManager.FindBookHistory(h => h.User == SelectedUser && h.ReturnDate == null).ToList();
                 if (bookHistory.Count > 0)
                 {
                     string booksName = string.Empty;
-                    foreach (BookHistory bookHistoryItem in bookHistory) 
+                    foreach (BookHistory bookHistoryItem in bookHistory)
                         booksName += bookHistoryItem.Book.Name + "\n";
 
                     string msg = $"Невозможно удалить читателя {SelectedUser.FullName}\n" +
                         $"У читателя не сданы книги:\n{booksName}";
-                    MessageBox.Show(msg,"Удаление", MessageBoxButton.OK, MessageBoxImage.Error);
-                }                  
+                    MessageBox.Show(msg, "Удаление", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 else
                 {
                     // Если книги сданы запрос подтверждения на удаления читателя
@@ -420,9 +406,82 @@ namespace Library.ViewModels
                         updateRequestData();
                     }
                 }
-                             
+
             }
         }
+        #endregion
+
+        #region Diagrams
+        private List<String> chartsVariants = new()
+        { "Количество книг, по годам издания",
+          "Количество книг, выданных за определенный период",
+          "Суммарное количество страниц по годам издания"
+        };
+        public List<String> ChartsVariants
+        {
+            get => chartsVariants;
+        }
+
+        private int _selectedChartVariantIndex = 0;
+        public int SelectedChartVariantIndex
+        {
+            get { return _selectedChartVariantIndex; }
+            set
+            {
+                _selectedChartVariantIndex = value;
+                Set(ref _selectedChartVariantIndex, value);
+            }
+        }
+
+        private string _diagramTitle = string.Empty;
+        public string DiagramTitle
+        {
+            get => _diagramTitle;
+            set { Set(ref _diagramTitle, value); }
+        }
+
+        private ICommand _showDiagramCmd;
+        public ICommand ShowDiagramCmd => _showDiagramCmd ??=
+            new RelayCommand(showDiagrammExecuted);
+
+        private string _titleAxisX = string.Empty;
+        public string TitleAxisX
+        {
+            get=>_titleAxisX;
+            set { Set(ref _titleAxisX, value); }
+        }
+        private string _titleAxisY = string.Empty;
+        public string TitleAxisY
+        {
+            get => _titleAxisY;
+            set { Set(ref _titleAxisY, value); }
+        }
+        public SeriesCollection Series { get; set; } = new();
+        public ObservableCollection<int> LabelsX = new();
+        public ObservableCollection<int> LabelsY = new();
+
+
+        private void showDiagrammExecuted(object obj)
+        {
+            DiagramTitle = ChartsVariants[SelectedChartVariantIndex];
+            Series.Clear();
+            LabelsX.Clear();
+            LabelsY.Clear();
+
+            switch (SelectedChartVariantIndex)
+            {
+                case 0:
+                    {
+                        TitleAxisX = "Года";
+                        TitleAxisY = "Количество книг";
+
+                        List<Book> books = bookManager.GetBooks().ToList();                       
+
+                        break;
+                    }
+            }
+        }
+
         #endregion
         #endregion
 

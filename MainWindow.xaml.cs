@@ -1,6 +1,7 @@
 ﻿using Library.Business.Infastructure;
 using Library.Business.Infastructure.DbFakeData;
 using Library.ViewModels;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,7 +33,8 @@ namespace Library
 
             mainWindowViewModel = new (managersFactory);
             this.DataContext = mainWindowViewModel;
+                    
         }
-
+      
     }
 }
