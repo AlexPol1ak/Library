@@ -5,12 +5,14 @@ using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
 using Library.Views;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MaterialDesignColors;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup.Localizer;
+using System.Windows.Media;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.ViewModels
@@ -421,18 +424,15 @@ namespace Library.ViewModels
         {
             get => chartsVariants;
         }
-
         private int _selectedChartVariantIndex = 0;
         public int SelectedChartVariantIndex
         {
             get { return _selectedChartVariantIndex; }
             set
             {
-                _selectedChartVariantIndex = value;
                 Set(ref _selectedChartVariantIndex, value);
             }
         }
-
         private string _diagramTitle = string.Empty;
         public string DiagramTitle
         {
@@ -443,11 +443,12 @@ namespace Library.ViewModels
         private ICommand _showDiagramCmd;
         public ICommand ShowDiagramCmd => _showDiagramCmd ??=
             new RelayCommand(showDiagrammExecuted);
-
+        //Diagram Binding
+        public SeriesCollection Series { get; set; } = new SeriesCollection();
         private string _titleAxisX = string.Empty;
         public string TitleAxisX
         {
-            get=>_titleAxisX;
+            get => _titleAxisX;
             set { Set(ref _titleAxisX, value); }
         }
         private string _titleAxisY = string.Empty;
@@ -456,32 +457,112 @@ namespace Library.ViewModels
             get => _titleAxisY;
             set { Set(ref _titleAxisY, value); }
         }
-        public SeriesCollection Series { get; set; } = new();
-        public ObservableCollection<int> LabelsX = new();
-        public ObservableCollection<int> LabelsY = new();
+        //X
+        private int _axisXMinValue = 0;
+        public int AxisXMinValue
+        {
+            get => _axisXMinValue;
+            set { Set(ref _axisXMinValue, value); }
+        }
+        private int _axisXMaxValue = 10;
+        public int AxisXMaxValue
+        {
+            get => _axisXMaxValue;
+            set { Set(ref _axisXMaxValue, value); }
+        }
+        private int _sepStepX = 10;
+        public int SepStepX
+        {
+            get => _sepStepX;
+            set { Set(ref _sepStepX, value); }
+        }
+        //Y
+        private int _axisYMinValue = 0;
+        public int AxisYMinValue
+        {
+            get => _axisYMinValue;
+            set { Set(ref _axisYMinValue, value); } // Исправлено
+        }
+        private int _axisYMaxValue = 10;
+        public int AxisYMaxValue
+        {
+            get => _axisYMaxValue;
+            set { Set(ref _axisYMaxValue, value); }
+        }
+        private int _sepStepY = 1;
+        public int SepStepY
+        {
+            get => _sepStepY;
+            set { Set(ref _sepStepY, value); }
+        }
 
+        public ObservableCollection<int> YearsLabels { get; set; } = new();
 
+        /// <summary>
+        /// Обработчик команды показать диаграмму.
+        /// </summary>
+        /// <param name="obj"></param>
         private void showDiagrammExecuted(object obj)
         {
             DiagramTitle = ChartsVariants[SelectedChartVariantIndex];
             Series.Clear();
-            LabelsX.Clear();
-            LabelsY.Clear();
+
+            List<Book> books = bookManager.GetBooks().ToList();
 
             switch (SelectedChartVariantIndex)
             {
                 case 0:
+                    {                       
+                        // Группируем книги по годам издания
+                        var booksByYear = books.GroupBy(b => b.PublicationDate)
+                                               .Select(g => new
+                                               {
+                                                   Year = g.Key,
+                                                   Count = g.Count()
+                                               })
+                                               .OrderBy(b => b.Year)
+                                               .ToList(); 
+                        
+                        if (booksByYear.Any())
+                        {
+                            
+                            TitleAxisX = "Года";
+                            TitleAxisY = "Количество книг";
+                            AxisXMinValue = booksByYear.First().Year -50;
+                            AxisXMaxValue = booksByYear.Last().Year + 2; 
+                            AxisYMinValue = 0;
+                            AxisYMaxValue = booksByYear.Last().Count + 2; 
+                            SepStepX = 25;
+                            SepStepY = 1;
+
+                            ChartValues<ObservablePoint> chartValues = new();
+                            foreach (var book in booksByYear)
+                            {
+                                chartValues.Add(new ObservablePoint(book.Year, book.Count));
+                            }
+
+                            LineSeries lineSeries = new()
+                            {
+                                Title = "Количество книг",
+                                Values = chartValues,
+                                PointGeometry = DefaultGeometries.Circle,
+                                PointGeometrySize = 10,
+                                Stroke = Brushes.Blue,
+                                Fill = Brushes.Transparent
+                                
+                            };                                                      
+                            Series.Add(lineSeries);                            
+                        }
+
+                        break;
+                    }
+
+                case 1:
                     {
-                        TitleAxisX = "Года";
-                        TitleAxisY = "Количество книг";
-
-                        List<Book> books = bookManager.GetBooks().ToList();                       
-
                         break;
                     }
             }
         }
-
         #endregion
         #endregion
 
