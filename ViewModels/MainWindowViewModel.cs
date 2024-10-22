@@ -436,7 +436,7 @@ namespace Library.ViewModels
         private string _diagramTitle = string.Empty;
         public string DiagramTitle
         {
-            get => _diagramTitle;
+            get { return _diagramTitle; }
             set { Set(ref _diagramTitle, value); }
         }
 
@@ -496,19 +496,62 @@ namespace Library.ViewModels
             set { Set(ref _sepStepY, value); }
         }
 
-        public ObservableCollection<int> YearsLabels { get; set; } = new();
+        private DateTime _dateDiagramEnd = DateTime.Now;
+        public DateTime DateDiagramEnd
+        {
+            get { return _dateDiagramEnd; }
+            set { Set(ref _dateDiagramEnd, value); }
+        }
+
+        private DateTime _dateDiagramStart = DateTime.Now.AddDays(-10);
+        public DateTime DateDiagramStart
+        {
+            get { return _dateDiagramStart; }
+            set { Set(ref _dateDiagramStart, value); }
+        }
+
+        private DateTime _minDateDiagram = DateTime.Now.AddYears(-20);
+        public DateTime MinDateDiagram 
+        {
+            get => _minDateDiagram;
+            set { Set(ref _minDateDiagram, value); } 
+        }
+
+        private DateTime _maxDateDiagram = DateTime.Now;
+        public DateTime MaxDateDiagram
+        {
+            get => _maxDateDiagram;
+            set { Set(ref _maxDateDiagram, value); }
+        }
+      
+        private Visibility _visibilityDate = Visibility.Collapsed;
+        public Visibility VisibilityDate
+        {
+            get { return _visibilityDate; }
+            set { Set(ref _visibilityDate, value); }
+        }
+
+        private ICommand _selectDiagramCmd;
+        public ICommand SelectDiagramCmd => _selectDiagramCmd ??=
+            new RelayCommand(selectDiagramExecuted);
+
+        private void selectDiagramExecuted(object obj)
+        {
+            if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;
+            else VisibilityDate = Visibility.Collapsed;
+        }
+
 
         /// <summary>
         /// Обработчик команды показать диаграмму.
         /// </summary>
-        /// <param name="obj"></param>
         private void showDiagrammExecuted(object obj)
         {
             DiagramTitle = ChartsVariants[SelectedChartVariantIndex];
             Series.Clear();
 
             List<Book> books = bookManager.GetBooks().ToList();
-
+            // Обработка выбора варианта диаграммы.
             switch (SelectedChartVariantIndex)
             {
                 case 0:
@@ -521,8 +564,7 @@ namespace Library.ViewModels
                                                    Count = g.Count()
                                                })
                                                .OrderBy(b => b.Year)
-                                               .ToList(); 
-                        
+                                               .ToList();
                         if (booksByYear.Any())
                         {
                             
@@ -561,6 +603,52 @@ namespace Library.ViewModels
                     {
                         break;
                     }
+
+                case 2:
+                    {
+                        // Группируем книги по годам издания и суммируем количество страниц
+                        var pagesByYear = books.GroupBy(b => b.PublicationDate)
+                                               .Select(g => new
+                                               {
+                                                   Year = g.Key,
+                                                   TotalPages = g.Sum(b => b.NumberPages)
+                                               })
+                                               .OrderBy(b => b.Year)
+                                               .ToList();
+
+                        if (pagesByYear.Any())
+                        {
+                            TitleAxisX = "Года";
+                            TitleAxisY = "Суммарное количество страниц";
+                            AxisXMinValue = pagesByYear.First().Year - 50;
+                            AxisXMaxValue = pagesByYear.Last().Year + 2;
+                            AxisYMinValue = 0;
+                            AxisYMaxValue = pagesByYear.Max(b => b.TotalPages) + 100; 
+                            SepStepX = 25;
+                            SepStepY = 100;
+
+                            ChartValues<ObservablePoint> chartValues = new();
+                            foreach (var book in pagesByYear)
+                            {
+                                chartValues.Add(new ObservablePoint(book.Year, book.TotalPages));
+                            }
+
+                            LineSeries lineSeries = new()
+                            {
+                                Title = "Суммарное количество страниц",
+                                Values = chartValues,
+                                PointGeometry = DefaultGeometries.Circle,
+                                PointGeometrySize = 10,
+                                Stroke = Brushes.Green,
+                                Fill = Brushes.Transparent
+                            };
+
+                            Series.Add(lineSeries);
+                        }
+
+                        break;
+                    }
+                
             }
         }
         #endregion
