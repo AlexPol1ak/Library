@@ -272,7 +272,8 @@
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="{Binding TitleAxisX}"         
                                       MaxValue="{Binding AxisXMaxValue}"
-                                      MinValue="{Binding AxisXMinValue}">
+                                      MinValue="{Binding AxisXMinValue}"
+                                      LabelFormatter="{Binding XAxisLabelFormatter}">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator Step="{Binding SepStepX, Mode=TwoWay}"/>
                                 </lvc:Axis.Separator>

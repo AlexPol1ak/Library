@@ -474,6 +474,12 @@ namespace Library.ViewModels
             get => _sepStepX;
             set { Set(ref _sepStepX, value); }
         }
+        private Func<double, string> _xAxisLabelFormatter;
+        public Func<double, string> XAxisLabelFormatter
+        {
+            get => _xAxisLabelFormatter;
+            set { Set(ref _xAxisLabelFormatter, value); }
+        }
         //Y
         private int _axisYMinValue = 0;
         public int AxisYMinValue
@@ -547,8 +553,10 @@ namespace Library.ViewModels
         private void selectDiagramExecuted(object obj)
         {
             updateDateDiagram();
-            if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;
-            else VisibilityDate = Visibility.Collapsed;
+            // DatePicker Видны только при выборе диаграммы номер 2.
+            if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;            
+            else
+                VisibilityDate = Visibility.Collapsed;
         }
 
         private ICommand _showDiagramCmd;
@@ -591,7 +599,7 @@ namespace Library.ViewModels
                                                .ToList();
                         if (booksByYear.Any())
                         {
-                            
+                            XAxisLabelFormatter = value => value.ToString("0");
                             TitleAxisX = "Года";
                             TitleAxisY = "Количество книг";
                             AxisXMinValue = booksByYear.First().Year -50;
@@ -619,12 +627,57 @@ namespace Library.ViewModels
                             };                                                      
                             Series.Add(lineSeries);                            
                         }
-
                         break;
                     }
 
                 case 1:
-                    {
+                    {// Получаем истории выдач книг за указанный период
+                        List<BookHistory> bookHistory = bookHistoryManager.FindBookHistory(
+                            bh => bh.IssueDate >= DateDiagramStart && bh.IssueDate <= DateDiagramEnd
+                        ).ToList();
+
+                        // Группируем по дате выдачи и считаем количество книг, выданных в каждый день
+                        // Используем .Date, чтобы группировать по дням
+                        var booksByDate = bookHistory.GroupBy(bh => bh.IssueDate.Date) 
+                            .Select(g => new
+                            {
+                                Date = g.Key,
+                                TotalBooks = g.Count()
+                            })
+                            .OrderBy(b => b.Date)
+                            .ToList();
+
+                        if (booksByDate.Any())
+                        {                        
+                            XAxisLabelFormatter = value => DateTime.FromOADate(value).ToString("dd.MM.yyyy");
+                            TitleAxisX = "Дата";
+                            TitleAxisY = "Количество книг";
+                            AxisXMinValue = (int)DateDiagramStart.Date.ToOADate();
+                            AxisXMaxValue = (int)DateDiagramEnd.Date.ToOADate();
+                            AxisYMinValue = 0;
+                            AxisYMaxValue = booksByDate.Max(b => b.TotalBooks) + 5;
+                            SepStepX = (AxisXMaxValue - AxisXMinValue) / 5;
+                            SepStepY = 1;
+                            
+                            ChartValues<ObservablePoint> chartValues = new();
+                            foreach (var book in booksByDate)
+                            {
+                                chartValues.Add(new ObservablePoint(book.Date.ToOADate(), book.TotalBooks));
+                            }
+
+                            LineSeries lineSeries = new()
+                            {
+                                Title = "Количество выданных книг",
+                                Values = chartValues,
+                                PointGeometry = DefaultGeometries.Circle,
+                                PointGeometrySize = 10,
+                                Stroke = Brushes.Green,
+                                Fill = Brushes.Transparent
+                            };
+
+                            Series.Add(lineSeries);
+                        }
+
                         break;
                     }
 
@@ -642,6 +695,7 @@ namespace Library.ViewModels
 
                         if (pagesByYear.Any())
                         {
+                            XAxisLabelFormatter = value => value.ToString("0");
                             TitleAxisX = "Года";
                             TitleAxisY = "Суммарное количество страниц";
                             AxisXMinValue = pagesByYear.First().Year - 50;
