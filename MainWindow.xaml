@@ -330,12 +330,21 @@
                                        VerticalAlignment="Center" Margin="3"
                                        Style="{StaticResource 
                                 MaterialDesignHeadline6TextBlock}"/>
-                            <DatePicker  VerticalAlignment="Center"   
+                            <DatePicker Name="DatePicker_Start"  VerticalAlignment="Center"   
                                          HorizontalAlignment="Stretch"
                                          DisplayDateEnd="{Binding MaxDateDiagram}"
-                                         DisplayDateStart="{Binding MinDateDiagram}"
-                                         SelectedDate="{Binding DateDiagramStart}"
-                                         IsEnabled="{Binding DateDiagramEnabled }"/>
+                                         DisplayDateStart="{Binding MinDateDiagram}">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="DateDiagramStart" 
+                                             Mode="TwoWay"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
                         </StackPanel>
                         
                         <StackPanel Grid.Column="4" Margin="5" Orientation="Vertical"
@@ -348,8 +357,18 @@
                             <DatePicker  VerticalAlignment="Center"   
                                          HorizontalAlignment="Stretch"
                                          DisplayDateEnd="{Binding MaxDateDiagram}"
-                                         DisplayDateStart="{Binding MinDateDiagram}"
-                                         SelectedDate="{Binding DateDiagramEnd}"/>
+                                         DisplayDateStart="{Binding MinDateDiagram}">
+                                <DatePicker.SelectedDate>
+                                    <Binding Path="DateDiagramEnd"
+                                             Mode="TwoWay"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
                         </StackPanel>
 
                     </Grid>

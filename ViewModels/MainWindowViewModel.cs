@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Library.ViewModels
         Выданные
     }
 
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, IDataErrorInfo
     {
         public MainWindowViewModel(ManagersFactory managersFactory)
         {
@@ -438,11 +439,8 @@ namespace Library.ViewModels
         {
             get { return _diagramTitle; }
             set { Set(ref _diagramTitle, value); }
-        }
+        }        
 
-        private ICommand _showDiagramCmd;
-        public ICommand ShowDiagramCmd => _showDiagramCmd ??=
-            new RelayCommand(showDiagrammExecuted);
         //Diagram Binding
         public SeriesCollection Series { get; set; } = new SeriesCollection();
         private string _titleAxisX = string.Empty;
@@ -523,6 +521,13 @@ namespace Library.ViewModels
             get => _maxDateDiagram;
             set { Set(ref _maxDateDiagram, value); }
         }
+
+        private bool _dateDiagramError = false;
+        public bool DateDiagramError
+        {
+            get => _dateDiagramError;
+            set { Set(ref _dateDiagramError, value); }
+        }
       
         private Visibility _visibilityDate = Visibility.Collapsed;
         public Visibility VisibilityDate
@@ -535,12 +540,31 @@ namespace Library.ViewModels
         public ICommand SelectDiagramCmd => _selectDiagramCmd ??=
             new RelayCommand(selectDiagramExecuted);
 
+        /// <summary>
+        /// Обработчик команды выбора варианта диаграммы.
+        /// </summary>
+        /// <param name="obj"></param>
         private void selectDiagramExecuted(object obj)
         {
+            updateDateDiagram();
             if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;
             else VisibilityDate = Visibility.Collapsed;
         }
 
+        private ICommand _showDiagramCmd;
+        public ICommand ShowDiagramCmd => _showDiagramCmd ??=
+            new RelayCommand(showDiagrammExecuted, canShowDiagram);
+
+        /// <summary>
+        /// Определяет возможность отображения диаграммы.
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        private bool canShowDiagram(object arg)
+        {
+            if (SelectedChartVariantIndex == 1 && DateDiagramError == true) return false;
+            return true;
+        }
 
         /// <summary>
         /// Обработчик команды показать диаграмму.
@@ -692,6 +716,57 @@ namespace Library.ViewModels
             foreach(User user in userManager.GetUsers())Users.Add(user);
             if(tempSelectedUser != null && Users.Contains(tempSelectedUser))
                 SelectedUser = tempSelectedUser;
+        }
+
+        private void updateDateDiagram()
+        {
+            DateDiagramStart = DateTime.Now.AddDays(-10);
+            DateDiagramEnd = DateTime.Now;
+        }
+        #endregion
+
+        #region Validation
+
+        public string Error => string.Empty;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = string.Empty;
+                switch (columnName)
+                {
+                    case nameof(DateDiagramStart):
+                    {
+                            if(DateDiagramStart > DateDiagramEnd)
+                            {
+                                error = "Дата начала не может быть позже даты окончания периода!";
+                                DateDiagramError = true;
+                            }
+                            else
+                            {
+                                error = string.Empty;
+                                DateDiagramError = false;
+                            }
+                            break;
+                    }
+                    case nameof(DateDiagramEnd):
+                    {
+                            if (DateDiagramEnd < DateDiagramStart)
+                            {
+                                error = "Дата окончания периода не может быть раньше даты начала!";
+                                DateDiagramError = true;
+                            }
+                            else
+                            {
+                                error = string.Empty;
+                                DateDiagramError = false;
+                            }                          
+                            break;
+                    }
+                }
+                return error;
+            }
         }
         #endregion
     }
