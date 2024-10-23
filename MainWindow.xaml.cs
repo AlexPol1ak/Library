@@ -1,5 +1,6 @@
 ﻿using Library.Business.Infastructure;
 using Library.Business.Infastructure.DbFakeData;
+using Library.Domain.Entities.Users;
 using Library.ViewModels;
 using Library.Views;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace Library
         {
             InitializeComponent();
             managersFactory = new ManagersFactory("DefaultConnection", "MySQLVersion");
+            this.Title = "Библиотека. ";
 
             StartLoadingAndAuthentication();
         }
@@ -78,7 +80,13 @@ namespace Library
         {            
             AuntificationWindow auntificationWindow = new AuntificationWindow(managersFactory.StuffManager);
             var result = auntificationWindow.ShowDialog();
-            return result == true;
+            if(result == true && auntificationWindow.AuthorizedStaff != null)
+            {
+                Stuff stuff = auntificationWindow.AuthorizedStaff;
+                this.Title += $"Администратор: {stuff.ShortName}";
+                return true;
+            }
+            return false;
         }
 
 

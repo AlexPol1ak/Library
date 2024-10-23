@@ -25,12 +25,19 @@ namespace Library.Views
         private StuffManager stuffManager;
         private int attemptСounter = 0;
 
+        public Stuff? AuthorizedStaff { get; private set; } = null;
+
         public AuntificationWindow( StuffManager stuffManager)
         {
             InitializeComponent();
             this.stuffManager = stuffManager;
         }
 
+        /// <summary>
+        /// Обработчик для события ввода email  и пароль.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InputFields_TextChanged(object sender, RoutedEventArgs e)
         {
             Btn_Entry.IsEnabled = !string.IsNullOrWhiteSpace(TextBox_Email.Text)
@@ -40,6 +47,11 @@ namespace Library.Views
             TextBox_Email.BorderBrush = Brushes.Transparent;
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки Войти
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_Entry_Click(object sender, RoutedEventArgs e)
         {
             TextBlock_Info.Text = string.Empty;
@@ -61,6 +73,7 @@ namespace Library.Views
                 if (result == true)
                 {
                     this.DialogResult = true;
+                    AuthorizedStaff = stuff;
                     this.Close();
                 }
                 else
@@ -68,29 +81,35 @@ namespace Library.Views
                     PassBox_Pass.BorderBrush = Brushes.Red;
                     PassBox_Pass.Password = string.Empty;
                     TextBlock_Info.Text = "Неверный пароль!";
-                    MessageBox.Show(password);
                 }
             }
-
-            attempControl();
+            attempControl(3);
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки Отмена
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
-        private void attempControl()
+        /// <summary>
+        /// Метод контроля количества попыток ввода пароля
+        /// </summary>
+        private void attempControl(int limit)
         {
             attemptСounter++;
 
-            if (attemptСounter > 3)
+            if (attemptСounter > limit)
             {
                 this.DialogResult = false;
                 this.Close();
             }
-            TextBlock_Info.Text += $"\nОсталось попыток: {3 - attemptСounter}";
+            TextBlock_Info.Text += $"\nОсталось попыток: {limit - attemptСounter}";
         }
     }
 }

@@ -53,14 +53,12 @@
                      Style="{StaticResource MaterialDesignPasswordBox}"
                      PasswordChanged="InputFields_TextChanged"/>
 
-
-        <Button x:Name ="Btn_Entry" IsEnabled="False"
+        <Button x:Name ="Btn_Entry" IsEnabled="False" IsDefault="True"
                 Grid.Row="4" Style="{StaticResource BtnStyle}"
                 Margin="30 15 30 15" Content="Войти"
                 Click="Btn_Entry_Click"/>
 
-
-        <Button x:Name ="Btn_Cancel"
+        <Button x:Name ="Btn_Cancel" IsCancel="True"
                 Grid.Row="4" Grid.Column="1"
                 Style="{StaticResource BtnStyle}"
                 Margin="30 15 30 15" Content="Отмена"
