@@ -28,12 +28,14 @@
                     </Grid.RowDefinitions>
                     <!--Data-->
                     <DataGrid Grid.Row="0" IsReadOnly="True" SelectionUnit="FullRow"
+                              SelectionMode="Single"
                               ItemsSource="{Binding Books}"
-                             SelectedItem="{Binding SelectedBook}"
-                             AutoGenerateColumns="False">
+                              SelectedItem="{Binding SelectedBook}"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Авторы" 
+                            <DataGridTextColumn Header="Авторы"
                                                 Binding="{Binding AuthorsShort}"/>
                             <DataGridTextColumn Header="Жанр"
                                                 Binding="{Binding Genre.Name}"/>

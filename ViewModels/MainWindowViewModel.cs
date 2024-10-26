@@ -276,7 +276,9 @@ namespace Library.ViewModels
         /// <returns></returns>
         private bool canRealizeRequest(object arg)
         {
-            return (SelectedRequest != null && SelectedRequest.Book.Rack != null);
+            return (SelectedRequest != null && 
+                SelectedRequest.Book.Rack != null && 
+                SelectedRequest.IssueDate == null);
         }
 
         /// <summary>
