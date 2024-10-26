@@ -7,23 +7,11 @@ using Library.Views;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using MaterialDesignColors;
-using Microsoft.EntityFrameworkCore.Update.Internal;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup.Localizer;
 using System.Windows.Media;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Library.ViewModels
 {
@@ -276,8 +264,8 @@ namespace Library.ViewModels
         /// <returns></returns>
         private bool canRealizeRequest(object arg)
         {
-            return (SelectedRequest != null && 
-                SelectedRequest.Book.Rack != null && 
+            return (SelectedRequest != null &&
+                SelectedRequest.Book.Rack != null &&
                 SelectedRequest.IssueDate == null);
         }
 
@@ -441,7 +429,7 @@ namespace Library.ViewModels
         {
             get { return _diagramTitle; }
             set { Set(ref _diagramTitle, value); }
-        }        
+        }
 
         //Diagram Binding
         public SeriesCollection Series { get; set; } = new SeriesCollection();
@@ -517,10 +505,10 @@ namespace Library.ViewModels
         }
 
         private DateTime _minDateDiagram = DateTime.Now.AddYears(-20);
-        public DateTime MinDateDiagram 
+        public DateTime MinDateDiagram
         {
             get => _minDateDiagram;
-            set { Set(ref _minDateDiagram, value); } 
+            set { Set(ref _minDateDiagram, value); }
         }
 
         private DateTime _maxDateDiagram = DateTime.Now;
@@ -536,7 +524,7 @@ namespace Library.ViewModels
             get => _dateDiagramError;
             set { Set(ref _dateDiagramError, value); }
         }
-      
+
         private Visibility _visibilityDate = Visibility.Collapsed;
         public Visibility VisibilityDate
         {
@@ -556,7 +544,7 @@ namespace Library.ViewModels
         {
             updateDateDiagram();
             // DatePicker Видны только при выборе диаграммы номер 2.
-            if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;            
+            if (SelectedChartVariantIndex == 1) VisibilityDate = Visibility.Visible;
             else
                 VisibilityDate = Visibility.Collapsed;
         }
@@ -589,7 +577,7 @@ namespace Library.ViewModels
             switch (SelectedChartVariantIndex)
             {
                 case 0:
-                    {                       
+                    {
                         // Группируем книги по годам издания
                         var booksByYear = books.GroupBy(b => b.PublicationDate)
                                                .Select(g => new
@@ -604,10 +592,10 @@ namespace Library.ViewModels
                             XAxisLabelFormatter = value => value.ToString("0");
                             TitleAxisX = "Года";
                             TitleAxisY = "Количество книг";
-                            AxisXMinValue = booksByYear.First().Year -50;
-                            AxisXMaxValue = booksByYear.Last().Year + 2; 
+                            AxisXMinValue = booksByYear.First().Year - 50;
+                            AxisXMaxValue = booksByYear.Last().Year + 2;
                             AxisYMinValue = 0;
-                            AxisYMaxValue = booksByYear.Last().Count + 2; 
+                            AxisYMaxValue = booksByYear.Last().Count + 2;
                             SepStepX = 25;
                             SepStepY = 1;
 
@@ -625,9 +613,9 @@ namespace Library.ViewModels
                                 PointGeometrySize = 10,
                                 Stroke = Brushes.Blue,
                                 Fill = Brushes.Transparent
-                                
-                            };                                                      
-                            Series.Add(lineSeries);                            
+
+                            };
+                            Series.Add(lineSeries);
                         }
                         break;
                     }
@@ -640,7 +628,7 @@ namespace Library.ViewModels
 
                         // Группируем по дате выдачи и считаем количество книг, выданных в каждый день
                         // Используем .Date, чтобы группировать по дням
-                        var booksByDate = bookHistory.GroupBy(bh => bh.IssueDate.Date) 
+                        var booksByDate = bookHistory.GroupBy(bh => bh.IssueDate.Date)
                             .Select(g => new
                             {
                                 Date = g.Key,
@@ -650,7 +638,7 @@ namespace Library.ViewModels
                             .ToList();
 
                         if (booksByDate.Any())
-                        {                        
+                        {
                             XAxisLabelFormatter = value => DateTime.FromOADate(value).ToString("dd.MM.yyyy");
                             TitleAxisX = "Дата";
                             TitleAxisY = "Количество книг";
@@ -660,7 +648,7 @@ namespace Library.ViewModels
                             AxisYMaxValue = booksByDate.Max(b => b.TotalBooks) + 5;
                             SepStepX = (AxisXMaxValue - AxisXMinValue) / 5;
                             SepStepY = 1;
-                            
+
                             ChartValues<ObservablePoint> chartValues = new();
                             foreach (var book in booksByDate)
                             {
@@ -703,7 +691,7 @@ namespace Library.ViewModels
                             AxisXMinValue = pagesByYear.First().Year - 50;
                             AxisXMaxValue = pagesByYear.Last().Year + 2;
                             AxisYMinValue = 0;
-                            AxisYMaxValue = pagesByYear.Max(b => b.TotalPages) + 100; 
+                            AxisYMaxValue = pagesByYear.Max(b => b.TotalPages) + 100;
                             SepStepX = 25;
                             SepStepY = 100;
 
@@ -728,7 +716,7 @@ namespace Library.ViewModels
 
                         break;
                     }
-                
+
             }
         }
         #endregion
@@ -743,8 +731,8 @@ namespace Library.ViewModels
             Book? tempSelectedBook = SelectedBook;
             Books.Clear();
             SelectedBook = null;
-            foreach(Book book in bookManager.GetBooks())Books.Add(book);
-            if(tempSelectedBook != null && Books.Contains(tempSelectedBook)) 
+            foreach (Book book in bookManager.GetBooks()) Books.Add(book);
+            if (tempSelectedBook != null && Books.Contains(tempSelectedBook))
                 SelectedBook = tempSelectedBook;
         }
 
@@ -756,9 +744,9 @@ namespace Library.ViewModels
             Request? tempSelectedRequest = SelectedRequest;
             Requests.Clear();
             SelectedRequest = null;
-            foreach (Request request in requestManager.GetRequests())Requests.Add(request);
-            if(tempSelectedRequest != null && Requests.Contains(tempSelectedRequest))
-                SelectedRequest = tempSelectedRequest;            
+            foreach (Request request in requestManager.GetRequests()) Requests.Add(request);
+            if (tempSelectedRequest != null && Requests.Contains(tempSelectedRequest))
+                SelectedRequest = tempSelectedRequest;
         }
 
         /// <summary>
@@ -769,8 +757,8 @@ namespace Library.ViewModels
             User? tempSelectedUser = SelectedUser;
             Users.Clear();
             SelectedUser = null;
-            foreach(User user in userManager.GetUsers())Users.Add(user);
-            if(tempSelectedUser != null && Users.Contains(tempSelectedUser))
+            foreach (User user in userManager.GetUsers()) Users.Add(user);
+            if (tempSelectedUser != null && Users.Contains(tempSelectedUser))
                 SelectedUser = tempSelectedUser;
         }
 
@@ -793,8 +781,8 @@ namespace Library.ViewModels
                 switch (columnName)
                 {
                     case nameof(DateDiagramStart):
-                    {
-                            if(DateDiagramStart > DateDiagramEnd)
+                        {
+                            if (DateDiagramStart > DateDiagramEnd)
                             {
                                 error = "Дата начала не может быть позже даты окончания периода!";
                                 DateDiagramError = true;
@@ -805,9 +793,9 @@ namespace Library.ViewModels
                                 DateDiagramError = false;
                             }
                             break;
-                    }
+                        }
                     case nameof(DateDiagramEnd):
-                    {
+                        {
                             if (DateDiagramEnd < DateDiagramStart)
                             {
                                 error = "Дата окончания периода не может быть раньше даты начала!";
@@ -817,9 +805,9 @@ namespace Library.ViewModels
                             {
                                 error = string.Empty;
                                 DateDiagramError = false;
-                            }                          
+                            }
                             break;
-                    }
+                        }
                 }
                 return error;
             }

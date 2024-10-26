@@ -1,18 +1,8 @@
 ﻿using Library.Business.Managers;
 using Library.Commands;
 using Library.Domain.Entities.Books;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Library.ViewModels
@@ -33,7 +23,7 @@ namespace Library.ViewModels
         private RackManager rackManager;
 
         public AddBookWindowViewModel(AuthorManager authorManager, BookManager bookManager,
-            GenreManager genreManager, TermManager termManager, RackManager rackManager )
+            GenreManager genreManager, TermManager termManager, RackManager rackManager)
         {
             this.authorManager = authorManager;
             this.bookManager = bookManager;
@@ -54,19 +44,19 @@ namespace Library.ViewModels
             if (Genres.Count > 0) SelectedIndexGenre = 0;
 
             // Инициализация авторов
-            _allAuthors = authorManager.GetAuthors().OrderBy(a=>a.ShortName).ToList();
+            _allAuthors = authorManager.GetAuthors().OrderBy(a => a.ShortName).ToList();
             AvailableAuthors = new();
             SelectedAuthors = new();
-            foreach(Author author in _allAuthors) AvailableAuthors.Add(author);
-            if(AvailableAuthors.Count > 0) SelectedIndexAvailableAuthors = 0;
-                
+            foreach (Author author in _allAuthors) AvailableAuthors.Add(author);
+            if (AvailableAuthors.Count > 0) SelectedIndexAvailableAuthors = 0;
+
         }
         #region Data
         private string _name = string.Empty;
         public string Name
         {
             get { return _name; }
-            set { Set(ref _name, value); }                       
+            set { Set(ref _name, value); }
         }
 
         private int _numberPages = 1;
@@ -103,32 +93,32 @@ namespace Library.ViewModels
         public int SelectedIndexGenre
         {
             get { return _selectedIndexGenre; }
-            set {Set(ref _selectedIndexGenre, value); }
+            set { Set(ref _selectedIndexGenre, value); }
         }
-       
+
         private List<Author> _allAuthors;
         private ObservableCollection<Author> _availableAuthors;
         private ObservableCollection<Author> _selectedAuthors;
         // Авторы доступные для установки
-        public ObservableCollection<Author> AvailableAuthors 
-        { 
+        public ObservableCollection<Author> AvailableAuthors
+        {
             get { return _availableAuthors; }
             private set { Set(ref _availableAuthors, value); }
         }
         // Установленные авторы
-        public ObservableCollection<Author> SelectedAuthors 
+        public ObservableCollection<Author> SelectedAuthors
         {
             get { return _selectedAuthors; }
             private set { Set(ref _selectedAuthors, value); }
-        }        
+        }
 
         private int _selectedIndexSelectedAuthors;
         private int _selectedIndexAvailableAuthors;
         // Выбор из списка установленных авторов
-        public int SelectedIndexSelectedAuthors 
+        public int SelectedIndexSelectedAuthors
         {
             get { return _selectedIndexSelectedAuthors; }
-            set {Set (ref _selectedIndexSelectedAuthors, value); }
+            set { Set(ref _selectedIndexSelectedAuthors, value); }
         }
         // Выбор из списка доступных авторов
         public int SelectedIndexAvailableAuthors
@@ -154,7 +144,7 @@ namespace Library.ViewModels
         private bool canSaveBook(object arg)
         {
             if (
-                BookNameHasError || NumberPagesHasError || PublicationYearHasError || 
+                BookNameHasError || NumberPagesHasError || PublicationYearHasError ||
                 DescriptionHasError || SelectedAuthorsHasError
                 ) return false;
             return true;
@@ -171,9 +161,9 @@ namespace Library.ViewModels
             book.Authors = SelectedAuthors;
             book.Genre = Genres[SelectedIndexGenre];
             // Инициализация правила выдачи
-            if(book.NumberPages < 200)
+            if (book.NumberPages < 200)
             {
-                Term term = termManager.FindTerm(f=>f.MaximumDays != null).First();
+                Term term = termManager.FindTerm(f => f.MaximumDays != null).First();
                 book.Term = term;
             }
             else
@@ -199,13 +189,13 @@ namespace Library.ViewModels
         // Команда закрытия окна
         private ICommand _cancelCmd;
         public ICommand CancelCmd => _cancelCmd ??=
-            new RelayCommand((id)=>EndWork?.Invoke(this, new EventArgs()));
+            new RelayCommand((id) => EndWork?.Invoke(this, new EventArgs()));
 
         // Команда добавления автора к добавляемой книге
         private ICommand _addAuthorCmd;
         public ICommand AddAuthorCmd => _addAuthorCmd ??=
             new RelayCommand(addAuthorExecuted,
-                (id) => AvailableAuthors.Count > 0 && SelectedIndexAvailableAuthors <= AvailableAuthors.Count-1
+                (id) => AvailableAuthors.Count > 0 && SelectedIndexAvailableAuthors <= AvailableAuthors.Count - 1
                 );
 
         /// <summary>
@@ -231,7 +221,7 @@ namespace Library.ViewModels
         private ICommand _removeAuthorCmd;
         public ICommand RemoveAuthorCmd => _removeAuthorCmd ??=
             new RelayCommand(removeAuthorExecuted,
-                (id)=> SelectedAuthors.Count>0 && SelectedIndexSelectedAuthors <= SelectedAuthors.Count-1
+                (id) => SelectedAuthors.Count > 0 && SelectedIndexSelectedAuthors <= SelectedAuthors.Count - 1
                 );
 
         /// <summary>
@@ -252,17 +242,17 @@ namespace Library.ViewModels
             // Обвновление и сортировка коллекции доступных авторов
             List<Author> TempAuthors = new List<Author>(AvailableAuthors).OrderBy(a => a.ShortName).ToList();
             AvailableAuthors.Clear();
-            foreach(Author a  in TempAuthors) AvailableAuthors.Add(a);
+            foreach (Author a in TempAuthors) AvailableAuthors.Add(a);
             // Установка индекса выбора на перемещенного автора.
-            SelectedIndexAvailableAuthors = AvailableAuthors.IndexOf(author);          
+            SelectedIndexAvailableAuthors = AvailableAuthors.IndexOf(author);
         }
 
         #endregion
 
         #region Validation
         public bool BookNameHasError { get; private set; } = false;
-        public bool NumberPagesHasError {  get; private set; } = false;
-        public bool PublicationYearHasError {  get; private set; } = false;
+        public bool NumberPagesHasError { get; private set; } = false;
+        public bool PublicationYearHasError { get; private set; } = false;
         public bool DescriptionHasError { get; private set; } = false;
         public bool _selectedAuthorsHasError = false;
         public bool SelectedAuthorsHasError
@@ -289,24 +279,24 @@ namespace Library.ViewModels
                         if (string.IsNullOrEmpty(Name) || string.IsNullOrWhiteSpace(Name))
                         {
                             error = "Поле не может быть пустым!";
-                            BookNameHasError = true;                          
+                            BookNameHasError = true;
                         }
                         else
                         {
                             if (Name.Length < 1 || Name.Length > 45)
                             {
                                 BookNameHasError = true;
-                                error = "Поле должно быть не короче 1 и не длиннее 45 символов!";                             
+                                error = "Поле должно быть не короче 1 и не длиннее 45 символов!";
                             }
                             else
                             {
                                 BookNameHasError = false;
                             }
-                        }                    
+                        }
                         break;
-                        case nameof(NumberPages):
+                    case nameof(NumberPages):
                         {
-                            if(NumberPages <1 ||  NumberPages > 9999)
+                            if (NumberPages < 1 || NumberPages > 9999)
                             {
                                 error = "Количество страниц может быть от 1 до 9999";
                                 NumberPagesHasError = true;
@@ -314,7 +304,7 @@ namespace Library.ViewModels
                             else NumberPagesHasError = false;
                             break;
                         }
-                        case nameof(PublicationYear):
+                    case nameof(PublicationYear):
                         {
                             int maxYear = DateTime.Now.Year;
                             if (PublicationYear < 1900 || PublicationYear > maxYear)
@@ -325,9 +315,9 @@ namespace Library.ViewModels
                             else PublicationYearHasError = false;
                             break;
                         }
-                        case nameof(Description):
+                    case nameof(Description):
                         {
-                            if(Description !=  null && Description.Length >500)
+                            if (Description != null && Description.Length > 500)
                             {
                                 error = $"Описание не должно превышать 500 символов";
                                 DescriptionHasError = true;

@@ -2,13 +2,7 @@
 using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Library.ViewModels
@@ -46,7 +40,7 @@ namespace Library.ViewModels
 
         {
             get => _selectedUserIndex;
-            set { Set(ref  _selectedUserIndex, value); } 
+            set { Set(ref _selectedUserIndex, value); }
         }
         private int? _selectedBookIndex = null;
         public int? SelectedBookIndex
@@ -100,9 +94,9 @@ namespace Library.ViewModels
         {
             // Возвращаемая книга.
             Book book = Books[SelectedBookIndex!.Value];
-            foreach(BookHistory bookHistory in book.BookHistory)
+            foreach (BookHistory bookHistory in book.BookHistory)
             {
-                if(bookHistory.User == Users[SelectedUserIndex!.Value])
+                if (bookHistory.User == Users[SelectedUserIndex!.Value])
                 {
                     // Запись в историю книги даты возврата и примечания
                     bookHistory.ReturnDate = DateTime.Now;
@@ -128,13 +122,13 @@ namespace Library.ViewModels
         /// <param name="obj"></param>
         private void selectUserExecuted(object obj)
         {
-            if(SelectedUserIndex != null)
+            if (SelectedUserIndex != null)
             {
                 Books.Clear();
                 User user = Users[SelectedUserIndex.Value];
                 foreach (BookHistory bookHistory in bookHistoryManager.GetBookHistories("Book", "User"))
                 {
-                    if(bookHistory.ReturnDate == null && bookHistory.User == user)
+                    if (bookHistory.ReturnDate == null && bookHistory.User == user)
                         Books.Add(bookHistory.Book);
                 }
                 if (Books.Count > 0) SelectedBookIndex = 0;
@@ -146,9 +140,9 @@ namespace Library.ViewModels
         /// </summary>
         private void initData()
         {
-            foreach(BookHistory bookHistory in bookHistoryManager.FindBookHistory(h=>h.ReturnDate == null))
+            foreach (BookHistory bookHistory in bookHistoryManager.FindBookHistory(h => h.ReturnDate == null))
             {
-                if(!Users.Contains(bookHistory.User)) Users.Add(bookHistory.User);
+                if (!Users.Contains(bookHistory.User)) Users.Add(bookHistory.User);
             }
         }
 

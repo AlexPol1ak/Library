@@ -2,12 +2,7 @@
 using Library.Commands;
 using Library.Domain.Entities.Books;
 using Library.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -65,7 +60,7 @@ namespace Library.ViewModels
             this.userManager = userManager;
             this.bookManager = bookManager;
             this.bookHistoryManager = bookHistoryManager;
-            initData();           
+            initData();
         }
 
         /// <summary>
@@ -73,7 +68,7 @@ namespace Library.ViewModels
         /// </summary>
         private void initData()
         {
-            List<User> tempUsers = userManager.GetUsers("Requests").OrderBy(u=>u.FirstName).ToList();    
+            List<User> tempUsers = userManager.GetUsers("Requests").OrderBy(u => u.FirstName).ToList();
             foreach (User user in tempUsers) Users.Add(user);
 
             List<Book> tempBooks = bookManager.GetBooks("Genre", "Rack", "Term", "BookHistory").
@@ -81,7 +76,7 @@ namespace Library.ViewModels
             foreach (Book book in tempBooks) Books.Add(book);
 
             SelectedBookIndex = null;
-            SelectedUserIndex = null ;
+            SelectedUserIndex = null;
 
             InfoText = "Информация о заявке";
         }
@@ -103,9 +98,9 @@ namespace Library.ViewModels
         /// <returns></returns>
         private bool canAddRequestExecuted(object arg)
         {
-            if(SelectedUserIndex == null || SelectedBookIndex == null ||
+            if (SelectedUserIndex == null || SelectedBookIndex == null ||
                 !checkUserLimit(Users[SelectedUserIndex.Value], out int numberBooks))
-                return false;        
+                return false;
 
             return true;
         }
@@ -122,11 +117,11 @@ namespace Library.ViewModels
             var result = AddRequestWindowViewModel.checkReturnBook(book);
             Request newRequest = new(user, book, dateNow);
 
-            if(result == null)
+            if (result == null)
             {
                 book.Rack = null;
                 newRequest.IssueDate = dateNow;
-                BookHistory bookHistory = new ();
+                BookHistory bookHistory = new();
                 bookHistory.IssueDate = dateNow;
                 bookHistory.User = user;
                 bookHistory.Book = book;
@@ -150,7 +145,7 @@ namespace Library.ViewModels
 
                 var resultMb = MessageBox.Show(msg, "Оповещение",
                     MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if(resultMb == MessageBoxResult.OK)
+                if (resultMb == MessageBoxResult.OK)
                 {
                     newRequest.IssueDate = null;
                     requestManager.CreateRequest(newRequest);
@@ -160,7 +155,7 @@ namespace Library.ViewModels
                     DialogResult = true;
                     EndWork?.Invoke(this, EventArgs.Empty);
                 }
-            }                   
+            }
         }
 
         /// <summary>
@@ -224,19 +219,19 @@ namespace Library.ViewModels
         /// <param name="obj"></param>
         private void selectBookExecuted(object obj)
         {
-            if(SelectedBookIndex != null)
+            if (SelectedBookIndex != null)
             {
                 Book book = Books[SelectedBookIndex.Value];
                 string bookInfo = $"{book.Name}. Стр. - {book.NumberPages}\n";
                 InfoText = bookInfo;
-              
-                if(book.Rack != null)
+
+                if (book.Rack != null)
                 {
                     InfoText += $"Находится на стеллаже - {book.Rack.Name}";
                 }
                 else
                 {
-                    DateOnly? returnDate =( AddRequestWindowViewModel.checkReturnBook(book))?? DateOnly.MinValue;
+                    DateOnly? returnDate = (AddRequestWindowViewModel.checkReturnBook(book)) ?? DateOnly.MinValue;
 
                     InfoText += $"Находится у читателя." +
                         $" Дата возвращения до {returnDate.Value.ToShortDateString()}\n" +
@@ -256,18 +251,18 @@ namespace Library.ViewModels
         protected static bool checkUserLimit(User user, out int numberBooks, int maxBook = 3)
         {
             int counter = 0;
-            
-            foreach(Request request in user.Requests.Where(r=>r.IssueDate != null))
+
+            foreach (Request request in user.Requests.Where(r => r.IssueDate != null))
             {
-                foreach(BookHistory bookHistory in request.Book.BookHistory.Where(bh => bh.User == user))
+                foreach (BookHistory bookHistory in request.Book.BookHistory.Where(bh => bh.User == user))
                 {
-                    if(bookHistory.ReturnDate == null) counter++;
+                    if (bookHistory.ReturnDate == null) counter++;
                 }
             }
 
             numberBooks = counter;
 
-            if (counter >= maxBook) return false;        
+            if (counter >= maxBook) return false;
 
             return true;
         }
@@ -279,16 +274,16 @@ namespace Library.ViewModels
         /// <returns>null-Если книга на полке иначе дата возврата книги. </returns>
         protected static DateOnly? checkReturnBook(Book book)
         {
-            if(book.Rack != null) return null;
+            if (book.Rack != null) return null;
 
-            if(book.BookHistory.Count > 0)
+            if (book.BookHistory.Count > 0)
             {
-                foreach(BookHistory bookHistory in book.BookHistory)
+                foreach (BookHistory bookHistory in book.BookHistory)
                 {
-                    if(bookHistory.ReturnDate == null )
+                    if (bookHistory.ReturnDate == null)
                     {
                         int? limitDay = bookHistory.Book.Term.MaximumDays;
-                        if(limitDay == null) return DateOnly.FromDateTime(DateTime.Now);
+                        if (limitDay == null) return DateOnly.FromDateTime(DateTime.Now);
                         DateOnly returnDate = DateOnly.FromDateTime(bookHistory.IssueDate.AddDays(limitDay.Value));
                         return returnDate;
                     }
@@ -296,7 +291,7 @@ namespace Library.ViewModels
             }
 
             return DateOnly.MaxValue;
-        }        
+        }
 
     }
 }

@@ -1,14 +1,8 @@
 ﻿using Library.Business.Managers;
 using Library.Commands;
 using Library.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Library.ViewModels
@@ -33,7 +27,7 @@ namespace Library.ViewModels
         }
 
         private List<string> allEmail = new();
-        
+
 
         private string _firstName = string.Empty;
         public string FirstName
@@ -87,9 +81,9 @@ namespace Library.ViewModels
         /// <returns></returns>
         private bool canUserSave(object arg)
         {
-            if(FirstNameHasError || LastNameHasError || PatronymicHasError || EmailHasError)
+            if (FirstNameHasError || LastNameHasError || PatronymicHasError || EmailHasError)
                 return false;
-            
+
             return true;
         }
 
@@ -141,14 +135,14 @@ namespace Library.ViewModels
                 {
                     case nameof(FirstName):
                         {
-                            if(string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName))
+                            if (string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName))
                             {
                                 FirstNameHasError = true;
                                 error = "Имя не может быть пустым!";
                             }
                             else
                             {
-                                if(FirstName.Length < 2 || FirstName.Length > 45)
+                                if (FirstName.Length < 2 || FirstName.Length > 45)
                                 {
                                     FirstNameHasError = true;
                                     error = "Неверная длинна!";
@@ -158,7 +152,7 @@ namespace Library.ViewModels
                                     FirstNameHasError = false;
                                 }
                             }
-                             
+
                         }
                         break;
                     case nameof(LastName):
@@ -184,7 +178,7 @@ namespace Library.ViewModels
                         break;
                     case nameof(Email):
                         {
-                            if(string.IsNullOrEmpty(Email) || string.IsNullOrWhiteSpace(Email))
+                            if (string.IsNullOrEmpty(Email) || string.IsNullOrWhiteSpace(Email))
                             {
                                 EmailHasError = true;
                                 error = "Поле Email не может быть пустым!";
@@ -192,7 +186,7 @@ namespace Library.ViewModels
                             else
                             {
                                 var emailAttribute = new EmailAddressAttribute();
-                                if(emailAttribute.IsValid(Email) != true)
+                                if (emailAttribute.IsValid(Email) != true)
                                 {
                                     EmailHasError = true;
                                     error = "Некорректный Email!";
@@ -210,7 +204,7 @@ namespace Library.ViewModels
                                     }
                                 }
                             }
-                                                      
+
                         }
                         break;
                 }
