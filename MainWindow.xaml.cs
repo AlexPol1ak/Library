@@ -47,15 +47,15 @@ namespace Library
             var initializeViewModelTask = InitializeViewModelAsync();
 
             // Параллельно отображаем окно аутентификации
-            bool authSuccess = await auntification();
+            //bool authSuccess = await auntification();
           
-            if (!authSuccess)
-            {
-                this.Close(); 
-                return;
-            }
+            //if (!authSuccess)
+            //{
+            //    this.Close(); 
+            //    return;
+            //}
             
-            await initializeViewModelTask;           
+            //await initializeViewModelTask;           
         }
 
         /// <summary>

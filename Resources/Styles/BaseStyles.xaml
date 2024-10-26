@@ -21,6 +21,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+
     <!--Buttons-->
     <!--Базовый стиль всех кнопок-->
     <Style x:Key="BaseButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">

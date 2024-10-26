@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         xmlns:mdc="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"       
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"       
         Style="{StaticResource MaterialDesignWindow}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900">
+    
     <Grid>
         <TabControl Name="Tb_Main">
 
@@ -25,36 +26,34 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
-
-                    <ListView Grid.Row="0"
+                    <!--Data-->
+                    <DataGrid Grid.Row="0" IsReadOnly="True" SelectionUnit="FullRow"
                               ItemsSource="{Binding Books}"
-                              SelectedItem="{Binding SelectedBook}"
-                              Name="BooksListView">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn                                    
-                                    Header="Название"
-                                    DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn 
-                                    Header="Авторы"
-                                    DisplayMemberBinding="{Binding AuthorsShort}"/>
-                                <GridViewColumn
-                                    Header="Жанр"
-                                    DisplayMemberBinding="{Binding Genre.Name}"/>
-                                <GridViewColumn 
-                                    Header="Стеллаж"
-                                    DisplayMemberBinding="{Binding Rack.Name}"/>
-                                <GridViewColumn                                    
-                                    Header="Страниц"                                    
-                                    DisplayMemberBinding="{Binding NumberPages}"/>
-                                <GridViewColumn                                    
-                                    Header="Дата публикации"
-                                    DisplayMemberBinding="{Binding PublicationDate}"/>
-                                
-                            </GridView>
-                        </ListView.View>
-                        
-                    </ListView>
+                             SelectedItem="{Binding SelectedBook}"
+                             AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Авторы" 
+                                                Binding="{Binding AuthorsShort}"/>
+                            <DataGridTextColumn Header="Жанр"
+                                                Binding="{Binding Genre.Name}"/>
+                            <DataGridTextColumn Header="Стеллаж"
+                                                Binding="{Binding Rack.Name}"/>
+                            <DataGridTextColumn Header="Страниц" 
+                                                Binding="{Binding NumberPages}" 
+                            ElementStyle="{StaticResource CenteredTextBlockStyle}"/>
+                            <DataGridTextColumn
+                                                Binding="{Binding PublicationDate}"
+                            ElementStyle="{StaticResource CenteredTextBlockStyle}">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock TextAlignment="Center">
+                                        Дата<LineBreak/>публикации
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
 
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.ColumnDefinitions>
