@@ -1,4 +1,5 @@
 ﻿using Library.Business.Infastructure;
+using Library.Business.Infastructure.DbFakeData;
 using Library.Domain.Entities.Users;
 using Library.ViewModels;
 using Library.Views;
@@ -19,7 +20,16 @@ namespace Library
         public MainWindow()
         {
             InitializeComponent();
-            managersFactory = new ManagersFactory("DefaultConnection", "MySQLVersion");
+            //managersFactory = new ManagersFactory("LocalConnection", "MySQLVersionLocal");
+
+            ChooseServerWindow chooseServerWindow = new ChooseServerWindow();
+            chooseServerWindow.ShowDialog();
+            if(chooseServerWindow.DialogResult != true || chooseServerWindow.ManagersFactory == null)
+            {
+                this.Close();
+            }
+
+            managersFactory = chooseServerWindow.ManagersFactory!;
             this.Title = "Библиотека. ";
 
             StartLoadingAndAuthentication();
