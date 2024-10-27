@@ -1,5 +1,4 @@
 ﻿using Library.Business.Infastructure;
-using Library.Business.Infastructure.DbFakeData;
 using Library.Domain.Entities.Users;
 using Library.ViewModels;
 using Library.Views;
@@ -24,7 +23,7 @@ namespace Library
 
             ChooseServerWindow chooseServerWindow = new ChooseServerWindow();
             chooseServerWindow.ShowDialog();
-            if(chooseServerWindow.DialogResult != true || chooseServerWindow.ManagersFactory == null)
+            if (chooseServerWindow.DialogResult != true || chooseServerWindow.ManagersFactory == null)
             {
                 this.Close();
             }
@@ -45,16 +44,16 @@ namespace Library
             // Запуск задачи инициализации ViewModel и загрузки данных
             var initializeViewModelTask = InitializeViewModelAsync();
 
-            // Параллельно отображаем окно аутентификации
-            //bool authSuccess = await auntification();
+            //Параллельно отображаем окно аутентификации
+            bool authSuccess = await auntification();
 
-            //if (!authSuccess)
-            //{
-            //    this.Close(); 
-            //    return;
-            //}
+            if (!authSuccess)
+            {
+                this.Close();
+                return;
+            }
 
-            //await initializeViewModelTask;           
+            await initializeViewModelTask;
         }
 
         /// <summary>
@@ -63,7 +62,11 @@ namespace Library
         private async Task InitializeViewModelAsync()
         {
             await Task.Delay(10);
-            //if (new FakeData(managersFactory).InstallData() is bool flag) MessageBox.Show($"Установка начальных данных: {flag}");
+
+            // Установка начальных данных.
+            //if (new FakeData(managersFactory).InstallData() is bool flag)
+            //    MessageBox.Show($"Установка начальных данных: {flag}");
+
             mainWindowViewModel = new MainWindowViewModel(managersFactory);
 
             this.Dispatcher.Invoke(() =>
