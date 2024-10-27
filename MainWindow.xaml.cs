@@ -1,5 +1,4 @@
 ﻿using Library.Business.Infastructure;
-using Library.Business.Infastructure.DbFakeData;
 using Library.Domain.Entities.Users;
 using Library.ViewModels;
 using Library.Views;
@@ -24,7 +23,7 @@ namespace Library
 
             ChooseServerWindow chooseServerWindow = new ChooseServerWindow();
             chooseServerWindow.ShowDialog();
-            if(chooseServerWindow.DialogResult != true || chooseServerWindow.ManagersFactory == null)
+            if (chooseServerWindow.DialogResult != true || chooseServerWindow.ManagersFactory == null)
             {
                 this.Close();
             }

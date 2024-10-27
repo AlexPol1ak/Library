@@ -111,11 +111,11 @@ namespace Library.Views
         /// <param name="isEnabled"></param>
         private void elementsIsEnabled(bool isEnabled)
         {
-            foreach(var item in Grid_Main.Children)
+            foreach (var item in Grid_Main.Children)
             {
-                if(item is TextBox|| item is PasswordBox || item is Button)
+                if (item is TextBox || item is PasswordBox || item is Button)
                 {
-                    Control itemC = (Control)item; 
+                    Control itemC = (Control)item;
                     itemC.IsEnabled = isEnabled;
                 }
             }
