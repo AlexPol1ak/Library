@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Height="350" Width="350"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid x:Name="Grid_Main">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -40,13 +40,13 @@
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    Foreground="Red"/>
 
-        <TextBox x:Name="TextBox_Email"
+        <TextBox x:Name="TextBox_Email" IsEnabled="False"
                  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                  Style="{StaticResource TextBoxStyle}" Margin="5"
                  MaxLength="45"
                  TextChanged="InputFields_TextChanged"/>
 
-        <PasswordBox x:Name="PassBox_Pass"
+        <PasswordBox x:Name="PassBox_Pass" IsEnabled="False"
                      Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                      Margin="5" VerticalAlignment="Top"
                      MaxLength="100"
@@ -58,7 +58,7 @@
                 Margin="30 15 30 15" Content="Войти"
                 Click="Btn_Entry_Click"/>
 
-        <Button x:Name ="Btn_Cancel" IsCancel="True"
+        <Button x:Name ="Btn_Cancel" IsCancel="True" IsEnabled="False"
                 Grid.Row="4" Grid.Column="1"
                 Style="{StaticResource BtnStyle}"
                 Margin="30 15 30 15" Content="Отмена"

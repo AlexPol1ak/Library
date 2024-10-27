@@ -1,10 +1,23 @@
 ﻿using Library.Business.Infastructure;
 using Library.DatabaseСonnection;
+using MySqlConnector;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Library.Views
-{
+{   
 
     /// <summary>
     /// Окно выбора сервера
@@ -26,7 +39,7 @@ namespace Library.Views
         /// </summary>
         private void initData()
         {
-            foreach (string serverName in _serverData.Keys) Cb_Servers.Items.Add(serverName);
+            foreach(string serverName  in _serverData.Keys) Cb_Servers.Items.Add(serverName);
             Cb_Servers.SelectedIndex = 0;
             btn_EntryServerIsEnabled();
         }
@@ -62,7 +75,7 @@ namespace Library.Views
                 {
                     // Проверяем пароль.
                     if (inputPass == serverAccessPass)
-                    {
+                    {                      
                         isConnected = await Task.Run(() => createManagersFactory(connectionName, sqlVersion));
                     }
                     else
@@ -112,7 +125,7 @@ namespace Library.Views
                 return true;
             }
             catch (Exception ex)
-            {
+            {              
                 return false;
             }
         }
@@ -132,9 +145,8 @@ namespace Library.Views
         private void ServerChangedExecuted(object sender, SelectionChangedEventArgs e)
         {
             PassBox_ServerPass.Password = string.Empty;
-            if (Cb_Servers.SelectedIndex == 0) PassBox_ServerPass.IsEnabled = false;
-            else
-            {
+            if(Cb_Servers.SelectedIndex == 0) PassBox_ServerPass.IsEnabled = false;
+            else {  
                 PassBox_ServerPass.IsEnabled = true;
             }
             btn_EntryServerIsEnabled();
@@ -159,16 +171,16 @@ namespace Library.Views
         /// </summary>
         private void btn_EntryServerIsEnabled()
         {
-            if (Cb_Servers.SelectedIndex != 0)
+            if(Cb_Servers.SelectedIndex != 0)
             {
-                if (PassBox_ServerPass.Password.Count() < 2) Btn_EntryServer.IsEnabled = false;
+                if(PassBox_ServerPass.Password.Count()< 2) Btn_EntryServer.IsEnabled =false;
                 else
                 {
                     Btn_EntryServer.IsEnabled = true;
                 }
             }
             else { Btn_EntryServer.IsEnabled = true; }
-        }
+        }    
 
     }
 }

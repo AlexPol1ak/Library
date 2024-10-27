@@ -1,4 +1,10 @@
-﻿namespace Library.DatabaseСonnection
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Library.DatabaseСonnection
 {
     /// <summary>
     /// Класс содержит ключи используемые в json строке подключений к базе данных

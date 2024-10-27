@@ -1,6 +1,7 @@
 ﻿using Library.Business.Managers;
 using Library.Domain.Entities.Users;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Library.Views
@@ -12,6 +13,7 @@ namespace Library.Views
     {
         private StuffManager stuffManager;
         private int attemptСounter = 0;
+        private List<Stuff> allStuffs;
 
         public Stuff? AuthorizedStaff { get; private set; } = null;
 
@@ -19,10 +21,14 @@ namespace Library.Views
         {
             InitializeComponent();
             this.stuffManager = stuffManager;
+            this.allStuffs = this.stuffManager.GetStuffs().ToList();
+            elementsIsEnabled(true);
+            TextBox_Email.Focus();
+
         }
 
         /// <summary>
-        /// Обработчик для события ввода email  и пароль.
+        /// Обработчик события ввода email или пароль.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -43,12 +49,11 @@ namespace Library.Views
         private void Btn_Entry_Click(object sender, RoutedEventArgs e)
         {
             TextBlock_Info.Text = string.Empty;
-            ;
 
             string email = TextBox_Email.Text;
             string password = PassBox_Pass.Password;
 
-            List<Stuff> stuffs = stuffManager.FindStuff(s => s.Email == email).ToList();
+            List<Stuff> stuffs = allStuffs.FindAll(s => s.Email == email).ToList();
             if (stuffs.Count < 1)
             {
                 TextBlock_Info.Text = "Такой email не зарегистрирован!";
@@ -98,6 +103,22 @@ namespace Library.Views
                 this.Close();
             }
             TextBlock_Info.Text += $"\nОсталось попыток: {limit - attemptСounter}";
+        }
+
+        /// <summary>
+        /// Метод включения и отключения всех элементов управления
+        /// </summary>
+        /// <param name="isEnabled"></param>
+        private void elementsIsEnabled(bool isEnabled)
+        {
+            foreach(var item in Grid_Main.Children)
+            {
+                if(item is TextBox|| item is PasswordBox || item is Button)
+                {
+                    Control itemC = (Control)item; 
+                    itemC.IsEnabled = isEnabled;
+                }
+            }
         }
     }
 }
