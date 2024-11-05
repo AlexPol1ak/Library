@@ -1,4 +1,4 @@
-# 📚 “Library” desktop application for Windows
+![Запись 2024-11-05 194139 (1)](https://github.com/user-attachments/assets/f6165bc4-86f5-4446-881c-6f0307cc1713)# 📚 “Library” desktop application for Windows
 
 **"Library"** is an application for efficient management of book collections and book requests. It supports both local and remote database connectivity (using MySQL as the database), making it a flexible solution for a variety of library needs.
 
@@ -26,7 +26,6 @@ This application allows you to register and process book requests, keep records 
 - **Unit of Work** - to manage transactions and data consistency.
 
 ---
-
-![App Animation](https://github.com/user-attachments/assets/f773f02d-e025-49d9-8f30-43013d613d99 | width=500)
+<img src="https://github.com/user-attachments/assets/d59a9bb8-5382-4009-9c09-6d46d9a5ecf5" width="500" alt="App Animation">
 
 > Note: The animation above showcases the key features of the application in action.
