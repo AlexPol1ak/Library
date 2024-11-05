@@ -23,3 +23,4 @@ This application allows you to register and process book requests, keep records 
 - **Repository** - to control access to data.
 - **Factory** - for creating object instances.
 - **Unit of Work** - to manage transactions and data consistency.
+![Запись 2024-11-05 194139 (1)](https://github.com/user-attachments/assets/f773f02d-e025-49d9-8f30-43013d613d99)
