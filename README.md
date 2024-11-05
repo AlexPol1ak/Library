@@ -1,4 +1,4 @@
-📚 “Library” desktop application for Windows
+# 📚 “Library” desktop application for Windows
 
 **"Library"** is an application for efficient management of book collections and book requests. It supports both local and remote database connectivity (using MySQL as the database), making it a flexible solution for a variety of library needs.
 
@@ -10,6 +10,12 @@ This application allows you to register and process book requests, keep records 
 - **Book Collection Management**: add and remove books from the library.
 - **Request Management**: create requests, fulfill or queue requests, delete requests.
 - **Analytics**: create charts to analyze book collection and user activity.
+
+## 📂 Project Structure
+The project is organized into several key packages to separate concerns and streamline functionality:
+- [**Library.Domain**](https://github.com/AlexPol1ak/Library.Domain) - Contains domain entities and interfaces related to the library's core functions.
+- [**Library.DAL**](https://github.com/AlexPol1ak/Library.DAL) - Data Access Layer (DAL) responsible for managing database interactions.
+- [**Library.Business**](https://github.com/AlexPol1ak/Library.Business) - Business logic layer implementing the application's algorithms and core processes.
 
 ## ⚙️ Technologies and Libraries Used
 - **Language and Framework**: C#, WPF
